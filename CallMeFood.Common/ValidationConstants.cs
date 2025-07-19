@@ -1,7 +1,8 @@
 ﻿namespace CallMeFood.Common
 {
-    public class Class1
+    public static class ValidationConstants
     {
+
 
     }
 }

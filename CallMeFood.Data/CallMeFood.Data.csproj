@@ -17,4 +17,8 @@
     <ProjectReference Include="..\CallMeFood.Data.Models\CallMeFood.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+  </ItemGroup>
+
 </Project>
