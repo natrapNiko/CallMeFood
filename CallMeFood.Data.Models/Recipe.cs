@@ -6,6 +6,7 @@
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
         public string Instructions { get; set; } = null!;
+        public string? ImageUrl { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; } = null!;
         public string UserId { get; set; } = null!;
