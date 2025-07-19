@@ -2,17 +2,18 @@
 
 namespace CallMeFood.Data
 {
+    using CallMeFood.Data.Models;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using CallMeFood.Data.Models;
     using System.Reflection;
 
-    public class ApplicationDbContext : IdentityDbContext
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-        {
-        }
+        { }
 
         //DbSets
         public virtual DbSet<Recipe> Recipes { get; set; } = null!;
@@ -22,13 +23,26 @@ namespace CallMeFood.Data
         public virtual DbSet<Favorite> Favorites { get; set; } = null!;
 
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
 
             //application of configurations
-            builder
+            modelBuilder
                 .ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+
+            // Seed Identity roles
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Id = "role-admin-id", Name = "Admin", NormalizedName = "ADMIN" },
+                new IdentityRole { Id = "role-user-id", Name = "User", NormalizedName = "USER" }
+            );
+
+            // Seed user-role relationships
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { UserId = "seed-user-1", RoleId = "role-admin-id" },
+                new IdentityUserRole<string> { UserId = "seed-user-2", RoleId = "role-user-id" }
+            );
         }
     }
 }

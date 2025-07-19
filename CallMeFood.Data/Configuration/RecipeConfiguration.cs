@@ -60,6 +60,41 @@
 
             // Global query filter for soft delete
             entity.HasQueryFilter(r => !r.IsDeleted);
+
+            entity.HasData(GenerateSeedRecipes());
+        }
+
+        private List<Recipe> GenerateSeedRecipes()
+        {
+            List<Recipe> seedRecipes = new List<Recipe>()
+            {
+                new Recipe
+                {
+                    Id = 1,
+                    Title = "Classic Caesar Salad",
+                    Description = "A timeless salad with romaine, croutons, and parmesan.",
+                    Instructions = "Toss all ingredients. Add dressing. Serve chilled.",
+                    ImageUrl = null,
+                    CreatedOn = DateTime.UtcNow,
+                    CategoryId = 1,
+                    UserId = "seed-user-1",
+                    IsDeleted = false
+                },
+                new Recipe
+                {
+                    Id = 2,
+                    Title = "Homemade Chocolate Cake",
+                    Description = "Rich chocolate cake for dessert lovers.",
+                    Instructions = "Mix, bake, cool, and frost.",
+                    ImageUrl = null,
+                    CreatedOn = DateTime.UtcNow,
+                    CategoryId = 3,
+                    UserId = "seed-user-2",
+                    IsDeleted = false
+                }
+            };
+
+            return seedRecipes;
         }
     }
 }

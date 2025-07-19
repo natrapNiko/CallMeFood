@@ -27,6 +27,23 @@ namespace CallMeFood.Data.Configuration
                 .WithMany(r => r.Ingredients)
                 .HasForeignKey(i => i.RecipeId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasData(GenerateSeedIngredients());
+        }
+
+        private List<Ingredient> GenerateSeedIngredients()
+        {
+            List<Ingredient> seedIngredients = new List<Ingredient>()
+            {
+                new Ingredient { Id = 1, Name = "Romaine Lettuce", Quantity = "1 head", RecipeId = 1 },
+                new Ingredient { Id = 2, Name = "Croutons", Quantity = "1 cup", RecipeId = 1 },
+                new Ingredient { Id = 3, Name = "Parmesan Cheese", Quantity = "0.5 cup", RecipeId = 1 },
+                new Ingredient { Id = 4, Name = "Chocolate", Quantity = "200g", RecipeId = 2 },
+                new Ingredient { Id = 5, Name = "Flour", Quantity = "2 cups", RecipeId = 2 },
+                new Ingredient { Id = 6, Name = "Eggs", Quantity = "3", RecipeId = 2 }
+            };
+
+            return seedIngredients;
         }
     }
 }

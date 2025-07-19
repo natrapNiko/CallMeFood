@@ -29,6 +29,33 @@
                 .WithMany(u => u.Comments)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasData(GenerateSeedComments());
+        }
+
+        private List<Comment> GenerateSeedComments()
+        {
+            List<Comment> seedComments = new List<Comment>()
+            {
+                new Comment
+                {
+                    Id = 1,
+                    Content = "Great salad, easy to make!",
+                    RecipeId = 1,
+                    UserId = "seed-user-2",
+                    CreatedOn = DateTime.UtcNow
+                },
+                new Comment
+                {
+                    Id = 2,
+                    Content = "Cake was super moist and delicious.",
+                    RecipeId = 2,
+                    UserId = "seed-user-1",
+                    CreatedOn = DateTime.UtcNow
+                },
+            };
+
+            return seedComments;
         }
     }
 }

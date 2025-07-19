@@ -25,6 +25,31 @@ namespace CallMeFood.Data.Configuration
                 .WithMany(r => r.Favorites)
                 .HasForeignKey(f => f.RecipeId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasData(GenerateSeedFavorites());
+        }
+
+        private List<Favorite> GenerateSeedFavorites()
+        {
+            List<Favorite> seedFavorites = new List<Favorite>()
+            {
+                new Favorite
+                {
+                    Id = 1,
+                    RecipeId = 1,
+                    UserId = "seed-user-2",
+                    CreatedOn = DateTime.UtcNow
+                },
+                new Favorite
+                {
+                    Id = 2,
+                    RecipeId = 2,
+                    UserId = "seed-user-1",
+                    CreatedOn = DateTime.UtcNow
+                }
+            };
+
+            return seedFavorites;
         }
     }
 }
