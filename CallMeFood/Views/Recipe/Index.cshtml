@@ -1,0 +1,16 @@
+﻿@using CallMeFood.Data.Models;
+@model IEnumerable<Recipe>
+
+<h2>All Recipes</h2>
+<ul>
+@foreach (var recipe in Model)
+{
+    <li>
+        <strong>@recipe.Title</strong> - @recipe.Description
+        <br />
+        <em>Category: @recipe.Category?.Name</em>
+        <br />
+        <em>By: @recipe.User?.UserName</em>
+    </li>
+}
+</ul>
