@@ -31,6 +31,7 @@ namespace CallMeFood.Services
                 Description = r.Description,
                 CategoryName = r.Category?.Name ?? "Unknown",
                 AuthorName = r.User?.UserName ?? "Unknown",
+                AuthorId = r.User?.Id ?? string.Empty,
                 CreatedOn = r.CreatedOn,
                 ImageUrl = r.ImageUrl ?? string.Empty
             });
@@ -54,16 +55,23 @@ namespace CallMeFood.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task UpdateAsync(RecipeEditViewModel model)
         {
-            var recipe = await _context.Recipes.FindAsync(id);
-            if (recipe != null)
-            {
-                // Soft delete:
-                recipe.IsDeleted = true;
-                await _context.SaveChangesAsync();
-            }
+            var recipe = await _context.Recipes.FindAsync(model.Id);
+
+            if (recipe == null || recipe.IsDeleted)
+                throw new ArgumentException("Recipe not found.");
+
+            recipe.Title = model.Title;
+            recipe.Description = model.Description;
+            recipe.Instructions = model.Instructions;
+            recipe.CategoryId = model.CategoryId;
+            recipe.ImageUrl = model.ImageUrl;
+            // Optionally: recipe.UpdatedOn = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
         }
+
 
         public async Task<RecipeDetailsViewModel?> GetByIdAsync(int id)
         {
@@ -128,6 +136,11 @@ namespace CallMeFood.Services
         }
 
         public Task UpdateAsync(Recipe recipe)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }

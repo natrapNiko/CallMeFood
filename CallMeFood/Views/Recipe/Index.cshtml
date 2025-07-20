@@ -1,4 +1,13 @@
-﻿@using CallMeFood.ViewModels;
+﻿@using Microsoft.AspNetCore.Identity
+@using CallMeFood.ViewModels;
+
+@inject UserManager<CallMeFood.Data.Models.ApplicationUser> UserManager
+
+@{
+    var currentUserId = UserManager.GetUserId(User);
+    var isAdmin = User.IsInRole("role-admin-id");
+}
+
 @model IEnumerable<RecipeViewModel>
 
 @{
@@ -32,6 +41,13 @@ else
                 }
                 <div style="margin-top:10px;">
                     <a href="@Url.Action("Details", "Recipe", new { id = recipe.Id })">View Details</a>
+
+                    @* --- EDIT BUTTON: Only for Admin or Author --- видим ботон само за създатели и админ *@
+                    @if (isAdmin || recipe.AuthorId == currentUserId)
+                    {
+                        <span> | </span>
+                        <a href="@Url.Action("Edit", "Recipe", new { id = recipe.Id })">Edit</a>
+                    }
                 </div>
             </div>
         }

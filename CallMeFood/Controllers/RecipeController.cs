@@ -1,22 +1,30 @@
 ﻿
 namespace CallMeFood.Web.Controllers
 {
+    using CallMeFood.Data.Models;
     using CallMeFood.Services.Interfaces;
     using CallMeFood.ViewModels;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
 
     public class RecipeController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly IRecipeService _recipeService;
         private readonly ICategoryService _categoryService;
 
-        public RecipeController(IRecipeService recipeService, ICategoryService categoryService)
+        public RecipeController(IRecipeService recipeService, ICategoryService categoryService, UserManager<ApplicationUser> userManager)
         {
             _recipeService = recipeService;
             _categoryService = categoryService;
+            _userManager = userManager;
         }
 
+        [HttpGet]
+        [AllowAnonymous] //available to unregistered users
         //GET: Recipe
         public async Task<IActionResult> Index()
         {
@@ -63,6 +71,47 @@ namespace CallMeFood.Web.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Requires using System.Security.Claims
             await _recipeService.AddAsync(model, userId!);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Recipe/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            var recipe = await _recipeService.GetByIdAsync(id);
+            if (recipe == null)
+                return NotFound();
+
+
+
+            // Get categories
+            var categories = await _categoryService.GetAllAsync();
+
+            // Map to ViewModel
+            var viewModel = new RecipeEditViewModel
+            {
+                Id = recipe.Id,
+                Title = recipe.Title,
+                Description = recipe.Description,
+                Instructions = recipe.Instructions,
+                CategoryId = recipe.CategoryId, //Add this property to your ViewModel if missing
+                ImageUrl = recipe.ImageUrl,
+                Categories = categories
+            };
+            return View(viewModel);
+        }
+
+        //POST: Recipe/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(RecipeEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Categories = await _categoryService.GetAllAsync();
+                return View(model);
+            }
+
+            await _recipeService.UpdateAsync(model);
             return RedirectToAction(nameof(Index));
         }
 

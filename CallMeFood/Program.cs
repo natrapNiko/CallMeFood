@@ -1,8 +1,7 @@
 using CallMeFood.Data;
+using CallMeFood.Data.Models;
 using CallMeFood.Services;
 using CallMeFood.Services.Interfaces;
-
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -19,8 +18,16 @@ builder.Services
     .AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services
-    .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddDefaultIdentity<ApplicationUser>(options => 
+        {
+            options.SignIn.RequireConfirmedAccount = false;
+
+            options.Password.RequireDigit = false;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+        })
+        .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 
@@ -49,6 +56,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
