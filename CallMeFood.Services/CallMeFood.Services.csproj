@@ -16,6 +16,7 @@
     <ProjectReference Include="..\CallMeFood.Common\CallMeFood.Common.csproj" />
     <ProjectReference Include="..\CallMeFood.Data.Models\CallMeFood.Data.Models.csproj" />
     <ProjectReference Include="..\CallMeFood.Data\CallMeFood.Data.csproj" />
+    <ProjectReference Include="..\CallMeFood.ViewModels\CallMeFood.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

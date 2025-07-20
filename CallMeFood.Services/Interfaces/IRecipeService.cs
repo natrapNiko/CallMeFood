@@ -2,12 +2,13 @@
 namespace CallMeFood.Services.Interfaces
 {
     using CallMeFood.Data.Models;
+    using CallMeFood.ViewModels;
 
     public interface IRecipeService
     {
         //Basic CRUD
-        Task<IEnumerable<Recipe>> GetAllAsync();
-        Task<Recipe> GetByIdAsync(int id);
+        Task<IEnumerable<RecipeViewModel>> GetAllAsync();
+        Task<RecipeDetailsViewModel?> GetByIdAsync(int id);
         Task AddAsync(Recipe recipe);
         Task UpdateAsync(Recipe recipe);
         Task DeleteAsync(int id);

@@ -4,6 +4,7 @@ namespace CallMeFood.Services
     using CallMeFood.Data;
     using CallMeFood.Data.Models;
     using CallMeFood.Services.Interfaces;
+    using CallMeFood.ViewModels;
     using Microsoft.EntityFrameworkCore;
 
     public class RecipeService : IRecipeService
@@ -16,15 +17,23 @@ namespace CallMeFood.Services
         }
 
         // get all recipes
-        public async Task<IEnumerable<Recipe>> GetAllAsync()
+        public async Task<IEnumerable<RecipeViewModel>> GetAllAsync()
         {
-            return await _context.Recipes
+            var recipes = await _context.Recipes
                 .Include(r => r.Category)
                 .Include(r => r.User)
-                .Include(r => r.Ingredients)
-                .Include(r => r.Comments)
-                .Include(r => r.Favorites)
                 .ToListAsync();
+
+            return recipes.Select(r => new RecipeViewModel
+            {
+                Id = r.Id,
+                Title = r.Title,
+                Description = r.Description,
+                CategoryName = r.Category?.Name ?? "Unknown",
+                AuthorName = r.User?.UserName ?? "Unknown",
+                CreatedOn = r.CreatedOn,
+                ImageUrl = r.ImageUrl ?? string.Empty
+            });
         }
 
         public Task AddAsync(Recipe recipe)
@@ -38,9 +47,31 @@ namespace CallMeFood.Services
         }
 
 
-        public Task<Recipe> GetByIdAsync(int id)
+        public async Task<RecipeDetailsViewModel?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var recipe = await _context.Recipes
+                .Include(r => r.Category)
+                .Include(r => r.User)
+                .Include(r => r.Ingredients)
+                .Include(r => r.Comments)
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (recipe == null)
+                return null;
+
+            return new RecipeDetailsViewModel
+            {
+                Id = recipe.Id,
+                Title = recipe.Title,
+                Description = recipe.Description,
+                CategoryName = recipe.Category?.Name ?? "Unknown",
+                AuthorName = recipe.User?.UserName ?? "Unknown",
+                CreatedOn = recipe.CreatedOn,
+                Instructions = recipe.Instructions,
+                ImageUrl = recipe.ImageUrl ?? string.Empty,
+                Ingredients = recipe.Ingredients.Select(i => i.Quantity + " " + i.Name).ToList(),
+                Comments = recipe.Comments.Select(c => c.Content).ToList()
+            };
         }
 
         public Task<IEnumerable<Recipe>> GetByUserIdAsync(string userId)

@@ -1,16 +1,39 @@
-﻿@using CallMeFood.Data.Models;
-@model IEnumerable<Recipe>
+﻿@using CallMeFood.ViewModels;
+@model IEnumerable<RecipeViewModel>
 
-<h2>All Recipes</h2>
-<ul>
-@foreach (var recipe in Model)
-{
-    <li>
-        <strong>@recipe.Title</strong> - @recipe.Description
-        <br />
-        <em>Category: @recipe.Category?.Name</em>
-        <br />
-        <em>By: @recipe.User?.UserName</em>
-    </li>
+@{
+    ViewData["Title"] = "All Recipes";
 }
-</ul>
+
+<h2>@ViewData["Title"]</h2>
+
+@if (!Model.Any())
+{
+    <div>No recipes found.</div>
+}
+else
+{
+    <div class="recipe-list">
+        @foreach (var recipe in Model)
+        {
+            <div class="recipe-card" style="border:1px solid #ccc; border-radius:8px; padding:15px; margin-bottom:18px; max-width:480px;">
+                <h3>@recipe.Title</h3>
+                <p>@recipe.Description</p>
+                <div>
+                    <span><strong>Category:</strong> @recipe.CategoryName</span><br />
+                    <span><strong>Author:</strong> @recipe.AuthorName</span><br />
+                    <span><strong>Created:</strong> @recipe.CreatedOn.ToString("yyyy-MM-dd")</span>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(recipe.ImageUrl))
+                {
+                    <div style="margin-top:10px;">
+                        <img src="@recipe.ImageUrl" alt="Image for @recipe.Title" style="max-width:200px; max-height:140px;" />
+                    </div>
+                }
+                <div style="margin-top:10px;">
+                    <a href="@Url.Action("Details", "Recipe", new { id = recipe.Id })">View Details</a>
+                </div>
+            </div>
+        }
+    </div>
+}
