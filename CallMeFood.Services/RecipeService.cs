@@ -36,16 +36,34 @@ namespace CallMeFood.Services
             });
         }
 
-        public Task AddAsync(Recipe recipe)
+        public async Task AddAsync(RecipeCreateViewModel model, string userId)
         {
-            throw new NotImplementedException();
+            var recipe = new Recipe
+            {
+                Title = model.Title,
+                Description = model.Description,
+                Instructions = model.Instructions,
+                CategoryId = model.CategoryId,
+                ImageUrl = model.ImageUrl,
+                CreatedOn = DateTime.UtcNow,
+                UserId = userId,
+                IsDeleted = false
+            };
+
+            await _context.Recipes.AddAsync(recipe);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var recipe = await _context.Recipes.FindAsync(id);
+            if (recipe != null)
+            {
+                // Soft delete:
+                recipe.IsDeleted = true;
+                await _context.SaveChangesAsync();
+            }
         }
-
 
         public async Task<RecipeDetailsViewModel?> GetByIdAsync(int id)
         {

@@ -9,7 +9,7 @@ namespace CallMeFood.Services.Interfaces
         //Basic CRUD
         Task<IEnumerable<RecipeViewModel>> GetAllAsync();
         Task<RecipeDetailsViewModel?> GetByIdAsync(int id);
-        Task AddAsync(Recipe recipe);
+        Task AddAsync(RecipeCreateViewModel model, string userId);
         Task UpdateAsync(Recipe recipe);
         Task DeleteAsync(int id);
 
