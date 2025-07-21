@@ -1,5 +1,4 @@
-﻿
-namespace CallMeFood.Services.Interfaces
+﻿namespace CallMeFood.Services.Interfaces
 {
     using CallMeFood.Data.Models;
     using CallMeFood.ViewModels;
@@ -10,9 +9,8 @@ namespace CallMeFood.Services.Interfaces
         Task<IEnumerable<RecipeViewModel>> GetAllAsync(); //yes
         Task<RecipeDetailsViewModel?> GetByIdAsync(int id); //yes
         Task AddAsync(RecipeCreateViewModel model, string userId); //yes
-        Task UpdateAsync(RecipeEditViewModel model);
-
-        Task DeleteAsync(int id);
+        Task UpdateAsync(RecipeEditViewModel model); // yes
+        Task DeleteAsync(int id); //yes
 
         //Pagination and Filtering
         Task<IEnumerable<Recipe>> GetPagedAsync(int pageNumber, int pageSize);

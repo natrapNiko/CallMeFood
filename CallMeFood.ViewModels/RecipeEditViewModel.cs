@@ -9,7 +9,6 @@
         public int CategoryId { get; set; }
         public string? ImageUrl { get; set; }
 
-        // Optionally: Add validation attributes here
         public IEnumerable<CategoryViewModel>? Categories { get; set; }
     }
 }

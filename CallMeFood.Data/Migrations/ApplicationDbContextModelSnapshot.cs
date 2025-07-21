@@ -91,15 +91,15 @@ namespace CallMeFood.Data.Migrations
                         {
                             Id = "seed-user-1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3f1d9ed3-28f8-40a3-b80d-dd3af30e0591",
+                            ConcurrencyStamp = "1041ba2e-e26d-43ef-aa21-2bd7d674b222",
                             Email = "admin@callmefood.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CALLMEFOOD.COM",
                             NormalizedUserName = "ADMIN@CALLMEFOOD.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEOoZK82R8gZoVKLuqLDI1fZX7k4Tw/rQWSn5N+OWqu9LB88Lar411f718FQl+wNvQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHfOt5jYAs26dp/gUXeHfQa9m9z8hrMT8l5eXNw66F2nvcBTtsJkAevCyxYww6AtRw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9ed9d119-b81d-4a71-b269-d9de289c4ada",
+                            SecurityStamp = "384f2dfc-61b0-40b2-a7ed-9433c4acc8ab",
                             TwoFactorEnabled = false,
                             UserName = "admin@callmefood.com"
                         },
@@ -107,15 +107,15 @@ namespace CallMeFood.Data.Migrations
                         {
                             Id = "seed-user-2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b69a8b50-b204-4b9b-ab77-5602085479d1",
+                            ConcurrencyStamp = "15f28091-f9e3-4260-88b4-3b637c971ef4",
                             Email = "user@callmefood.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@CALLMEFOOD.COM",
                             NormalizedUserName = "USER@CALLMEFOOD.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKtfPVO5icwB3zK8uHJ65h7NjGC0XeupwB3EfEgWJ7Ws6Uvlf1D8LiyvMmiL5yhkAA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOzYtPjzLzjbNx3KWg/1UvvchQyalsZVeakPjSDeXYJAKzqybtg4tUZFt7eFaz2n2w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "232aef32-8faa-4901-a8bf-94ca52f5307f",
+                            SecurityStamp = "83adee4f-51fd-4549-b1d8-68530b6a1901",
                             TwoFactorEnabled = false,
                             UserName = "user@callmefood.com"
                         });
@@ -197,7 +197,7 @@ namespace CallMeFood.Data.Migrations
                         {
                             Id = 1,
                             Content = "Great salad, easy to make!",
-                            CreatedOn = new DateTime(2025, 7, 19, 19, 8, 35, 163, DateTimeKind.Utc).AddTicks(5520),
+                            CreatedOn = new DateTime(2025, 7, 21, 19, 42, 14, 576, DateTimeKind.Utc).AddTicks(2773),
                             RecipeId = 1,
                             UserId = "seed-user-2"
                         },
@@ -205,7 +205,7 @@ namespace CallMeFood.Data.Migrations
                         {
                             Id = 2,
                             Content = "Cake was super moist and delicious.",
-                            CreatedOn = new DateTime(2025, 7, 19, 19, 8, 35, 163, DateTimeKind.Utc).AddTicks(5524),
+                            CreatedOn = new DateTime(2025, 7, 21, 19, 42, 14, 576, DateTimeKind.Utc).AddTicks(2775),
                             RecipeId = 2,
                             UserId = "seed-user-1"
                         });
@@ -241,14 +241,14 @@ namespace CallMeFood.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2025, 7, 19, 19, 8, 35, 164, DateTimeKind.Utc).AddTicks(9062),
+                            CreatedOn = new DateTime(2025, 7, 21, 19, 42, 14, 576, DateTimeKind.Utc).AddTicks(5080),
                             RecipeId = 1,
                             UserId = "seed-user-2"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2025, 7, 19, 19, 8, 35, 164, DateTimeKind.Utc).AddTicks(9071),
+                            CreatedOn = new DateTime(2025, 7, 21, 19, 42, 14, 576, DateTimeKind.Utc).AddTicks(5082),
                             RecipeId = 2,
                             UserId = "seed-user-1"
                         });
@@ -380,8 +380,9 @@ namespace CallMeFood.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2025, 7, 19, 19, 8, 35, 166, DateTimeKind.Utc).AddTicks(8864),
+                            CreatedOn = new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6528),
                             Description = "A timeless salad with romaine, croutons, and parmesan.",
+                            ImageUrl = "https://www.allrecipes.com/thmb/GKJL13Wb8TZ9hpJ9c70v0aNXsyQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/229063-Classic-Restaurant-Caesar-Salad-ddmfs-4x3-231-89bafa5e54dd4a8c933cf2a5f9f12a6f.jpg",
                             Instructions = "Toss all ingredients. Add dressing. Serve chilled.",
                             IsDeleted = false,
                             Title = "Classic Caesar Salad",
@@ -391,11 +392,60 @@ namespace CallMeFood.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2025, 7, 19, 19, 8, 35, 166, DateTimeKind.Utc).AddTicks(8870),
+                            CreatedOn = new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6534),
                             Description = "Rich chocolate cake for dessert lovers.",
+                            ImageUrl = "https://www.allrecipes.com/thmb/E4m_2-kD9C_w5E9kKa2gxiWAc1o=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/5959101-46973ebb82bc4ec3878c5ae0b128626f.jpg",
                             Instructions = "Mix, bake, cool, and frost.",
                             IsDeleted = false,
                             Title = "Homemade Chocolate Cake",
+                            UserId = "seed-user-2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 2,
+                            CreatedOn = new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6536),
+                            Description = "Classic Italian pasta dish with eggs, cheese, pancetta, and pepper.",
+                            ImageUrl = "https://www.allrecipes.com/thmb/zJzTLhtUWknHXVoFIzysljJ9wR8=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/11973-spaghetti-carbonara-ii-DDMFS-4x3-6edea51e421e4457ac0c3269f3be5157.jpg",
+                            Instructions = "Cook pasta. Sauté pancetta. Mix with eggs and cheese. Combine.",
+                            IsDeleted = false,
+                            Title = "Spaghetti Carbonara",
+                            UserId = "seed-user-1"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 1,
+                            CreatedOn = new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6538),
+                            Description = "Healthy layered snack with yogurt, fruit, and granola.",
+                            ImageUrl = "https://www.allrecipes.com/thmb/psuwM2WSiNw59zyQQJFEO-FehOA=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/5645992-63053852193740bba385f0abb5334ad0.jpg",
+                            Instructions = "Layer yogurt, fruit, and granola in a glass. Chill and serve.",
+                            IsDeleted = false,
+                            Title = "Greek Yogurt Parfait",
+                            UserId = "seed-user-2"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 2,
+                            CreatedOn = new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6540),
+                            Description = "Quick Asian-style stir-fried chicken with vegetables.",
+                            ImageUrl = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F04%2F29%2F223382_chicken-stir-fry_Rita-1x1-1.jpg&q=60&c=sc&poi=auto&orient=true&h=512",
+                            Instructions = "Cook chicken. Stir-fry vegetables. Mix with sauce. Serve with rice.",
+                            IsDeleted = false,
+                            Title = "Chicken Stir Fry",
+                            UserId = "seed-user-1"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 1,
+                            CreatedOn = new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6543),
+                            Description = "Fluffy pancakes loaded with fresh blueberries.",
+                            ImageUrl = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F05%2F27%2F686460-todds-famous-blueberry-pancakes-Dianne-1x1-1.jpg&q=60&c=sc&poi=auto&orient=true&h=512",
+                            Instructions = "Mix batter. Fold in blueberries. Cook on griddle. Serve warm.",
+                            IsDeleted = false,
+                            Title = "Blueberry Pancakes",
                             UserId = "seed-user-2"
                         });
                 });

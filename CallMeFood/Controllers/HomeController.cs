@@ -1,9 +1,9 @@
-using System.Diagnostics;
-using CallMeFood.Models;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CallMeFood.Controllers
 {
+    using System.Diagnostics;
+    using CallMeFood.Models;
+    using Microsoft.AspNetCore.Mvc;
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,7 +18,7 @@ namespace CallMeFood.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Contact()
         {
             return View();
         }

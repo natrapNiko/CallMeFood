@@ -1,0 +1,43 @@
+﻿@using CallMeFood.ViewModels
+@model RecipeDetailsViewModel
+
+@{
+    ViewData["Title"] = "Delete Recipe";
+}
+
+<h2>Delete Recipe</h2>
+
+<div style="max-width:500px; margin:auto; border:1px solid #ddd; border-radius:10px; padding:20px; background:#fff;">
+    <h3>Are you sure you want to delete this recipe?</h3>
+
+    <div>
+        <strong>Title:</strong>
+        <div>@Model.Title</div>
+    </div>
+    <div>
+        <strong>Description:</strong>
+        <div>@Model.Description</div>
+    </div>
+    <div>
+        <strong>Category:</strong>
+        <div>@Model.CategoryName</div>
+    </div>
+    <div>
+        <strong>Created On:</strong>
+        <div>@Model.CreatedOn.ToString("yyyy-MM-dd")</div>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+    {
+        <div style="margin-top:10px;">
+            <img src="@Model.ImageUrl" alt="Recipe image" style="max-width:200px;" />
+        </div>
+    }
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div style="margin-top:15px;">
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>

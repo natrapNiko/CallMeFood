@@ -1,5 +1,4 @@
-﻿
-namespace CallMeFood.Data.Models
+﻿namespace CallMeFood.Data.Models
 {
     using Microsoft.AspNetCore.Identity;
 

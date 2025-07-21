@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+footer a.text-primary:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}

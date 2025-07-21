@@ -1,8 +1,80 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome to CallMeFood!";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    body {
+        background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .home-hero {
+        max-width: 900px;
+        margin: 60px auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .home-title {
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 16px;
+    }
+
+    .home-subtitle {
+        font-size: 1.25rem;
+        color: #666;
+        margin-bottom: 32px;
+    }
+
+    .home-image {
+        max-width: 200px;
+        margin: 0 auto 30px;
+    }
+
+    .action-buttons a {
+        display: inline-block;
+        margin: 0 12px;
+        padding: 14px 32px;
+        font-size: 1.05rem;
+        color: #fff;
+        background: linear-gradient(90deg, #ff6a00, #ee0979);
+        border: none;
+        border-radius: 10px;
+        text-decoration: none;
+        box-shadow: 0 4px 16px rgba(255, 105, 135, 0.25);
+        transition: background 0.3s ease;
+    }
+
+        .action-buttons a:hover {
+            background: linear-gradient(90deg, #ee0979, #ff6a00);
+        }
+
+    .note {
+        margin-top: 30px;
+        color: #888;
+        font-size: 0.95rem;
+    }
+</style>
+
+<div class="home-hero">
+    <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" class="home-image" alt="CallMeFood logo" />
+
+    <div class="home-title">Welcome to CallMeFood!</div>
+
+    <div class="home-subtitle">
+        Your personal recipe-sharing platform. Discover, cook, and share delicious dishes with others.<br />
+        Whether you're a home cook or a foodie, this is the place for you.
+    </div>
+
+    <div class="action-buttons">
+        <a asp-controller="Recipe" asp-action="Index">🍽 Browse Recipes</a>
+        <a asp-controller="Recipe" asp-action="Create">➕ Share a Recipe</a>
+    </div>
+
+    <div class="note">Log in to create or comment on recipes. Admins have full access to manage content.</div>
 </div>

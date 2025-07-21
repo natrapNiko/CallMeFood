@@ -26,6 +26,7 @@ namespace CallMeFood.Web.Controllers
         [HttpGet]
         [AllowAnonymous] //available to unregistered users
         //GET: Recipe
+        [Route("Recipes")]
         public async Task<IActionResult> Index()
         {
             var recipes = await _recipeService.GetAllAsync();
@@ -33,6 +34,7 @@ namespace CallMeFood.Web.Controllers
         }
 
         //GET: Recipe/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var recipe = await _recipeService.GetByIdAsync(id);
@@ -45,6 +47,7 @@ namespace CallMeFood.Web.Controllers
         }
 
         //GET: Recipe/Create
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
             //Get categories for dropdown
@@ -75,6 +78,7 @@ namespace CallMeFood.Web.Controllers
         }
 
         // GET: Recipe/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var recipe = await _recipeService.GetByIdAsync(id);
@@ -115,5 +119,22 @@ namespace CallMeFood.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var recipe = await _recipeService.GetByIdAsync(id); //returns RecipeViewModel
+            if (recipe == null)
+                return NotFound();
+
+            return View(recipe);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _recipeService.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

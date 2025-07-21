@@ -140,9 +140,14 @@ namespace CallMeFood.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var recipe = await _context.Recipes.FindAsync(id);
+            if (recipe != null)
+            {
+                recipe.IsDeleted = true; // soft delete
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
