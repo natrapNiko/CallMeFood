@@ -27,10 +27,22 @@ namespace CallMeFood.Web.Controllers
         [AllowAnonymous] //available to unregistered users
         //GET: Recipe
         [Route("Recipes")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            var recipes = await _recipeService.GetAllAsync();
-            return View(recipes);
+            int pageSize = 6;
+
+            var totalRecipes = await _recipeService.GetTotalCountAsync();
+            var countRecipes = await _recipeService.GetPagedAsync(page, pageSize);
+
+            var viewModel = new RecipeListViewModel
+            {
+                Recipes = countRecipes,
+                CurrentPage = page,
+                TotalPages = (int)Math.Ceiling((double)totalRecipes / pageSize),
+                PageSize = pageSize
+            };
+
+            return View(viewModel);
         }
 
         //GET: Recipe/Details/5

@@ -115,14 +115,32 @@ namespace CallMeFood.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Recipe>> GetPagedAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<RecipeViewModel>> GetPagedAsync(int pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
+            return await _context.Recipes
+                .Where(r => !r.IsDeleted)
+                .OrderByDescending(r => r.CreatedOn)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(r => new RecipeViewModel
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Description = r.Description,
+                    CategoryName = r.Category.Name,
+                    AuthorName = r.User.UserName ?? "Unknown",
+                    CreatedOn = r.CreatedOn,
+                    ImageUrl = r.ImageUrl,
+                    AuthorId = r.UserId
+                })
+                .ToListAsync();
         }
 
-        public Task<int> GetTotalCountAsync()
+        public async Task<int> GetTotalCountAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Recipes
+                .Where(r => !r.IsDeleted)
+                .CountAsync();
         }
 
         public Task<IEnumerable<Recipe>> SearchByCategoryAsync(int categoryId)

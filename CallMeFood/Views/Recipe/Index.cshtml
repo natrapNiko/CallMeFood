@@ -7,7 +7,7 @@
     var isAdmin = User.IsInRole("Admin");
 }
 
-@model IEnumerable<RecipeViewModel>
+@model RecipeListViewModel
 @{
     ViewData["Title"] = "All Recipes";
 }
@@ -15,14 +15,14 @@
 <div class="container mt-4">
     <h2 class="text-center mb-4 text-primary">🍲 All Recipes</h2>
 
-    @if (!Model.Any())
+    @if (!Model.Recipes.Any())
     {
         <div class="alert alert-warning text-center">No recipes found.</div>
     }
     else
     {
         <div class="row g-4">
-            @foreach (var recipe in Model)
+            @foreach (var recipe in Model.Recipes)
             {
                 <div class="col-md-6 col-lg-4">
                     <div class="card shadow-sm h-100 border-0">
@@ -59,3 +59,14 @@
         </div>
     }
 </div>
+<nav>
+    <ul class="pagination justify-content-center mt-4">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
+
