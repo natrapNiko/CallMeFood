@@ -4,7 +4,7 @@ namespace CallMeFood.Services
     using CallMeFood.Data;
     using CallMeFood.Data.Models;
     using CallMeFood.Services.Interfaces;
-    using CallMeFood.ViewModels;
+    using CallMeFood.ViewModels.RecipeViewModels;
     using Microsoft.EntityFrameworkCore;
 
     public class RecipeService : IRecipeService

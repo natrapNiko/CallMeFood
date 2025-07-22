@@ -1,0 +1,23 @@
+﻿@using CallMeFood.ViewModels.CategoryViewModels
+
+@model IEnumerable<CategoryViewModel>
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<h2 class="text-primary mb-4">🍽️ Browse by Category</h2>
+
+<div class="row">
+    @foreach (var category in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@category.Name</h5>
+                    <a asp-controller="Category" asp-action="Recipes" asp-route-categoryId="@category.Id" class="btn btn-outline-primary">View Recipes</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

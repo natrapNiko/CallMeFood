@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CallMeFood.ViewModels
+namespace CallMeFood.ViewModels.RecipeViewModels
 {
     public class RecipeCreateViewModel
     {
@@ -14,8 +14,8 @@ namespace CallMeFood.ViewModels
         public string? ImageUrl { get; set; }
 
 
-        // For dropdowns
-        public IEnumerable<CategoryViewModel>? Categories { get; set; }
+        // For dropdowns Menu
+        public IEnumerable<CategoryDropDownViewModel>? Categories { get; set; }
     }
 
 }

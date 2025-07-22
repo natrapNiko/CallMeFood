@@ -3,7 +3,8 @@ namespace CallMeFood.Web.Controllers
 {
     using CallMeFood.Data.Models;
     using CallMeFood.Services.Interfaces;
-    using CallMeFood.ViewModels;
+    using CallMeFood.ViewModels.CategoryViewModels;
+    using CallMeFood.ViewModels.RecipeViewModels;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -66,7 +67,7 @@ namespace CallMeFood.Web.Controllers
             var categories = await _categoryService.GetAllAsync();
             var viewModel = new RecipeCreateViewModel
             {
-                Categories = categories.Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name }).ToList()
+                Categories = (IEnumerable<ViewModels.CategoryDropDownViewModel>)categories.Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name }).ToList()
             };
             return View(viewModel);
         }
@@ -80,7 +81,7 @@ namespace CallMeFood.Web.Controllers
             {
                 // Reload categories on error
                 var categories = await _categoryService.GetAllAsync();
-                model.Categories = categories.Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name }).ToList();
+                model.Categories = (IEnumerable<ViewModels.CategoryDropDownViewModel>?)categories.Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name }).ToList();
                 return View(model);
             }
 

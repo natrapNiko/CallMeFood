@@ -1,4 +1,6 @@
-﻿namespace CallMeFood.ViewModels
+﻿using CallMeFood.ViewModels.CategoryViewModels;
+
+namespace CallMeFood.ViewModels.RecipeViewModels
 {
     public class RecipeEditViewModel
     {

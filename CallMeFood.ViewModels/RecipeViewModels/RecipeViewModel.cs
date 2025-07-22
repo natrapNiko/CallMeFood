@@ -1,4 +1,4 @@
-﻿namespace CallMeFood.ViewModels
+﻿namespace CallMeFood.ViewModels.RecipeViewModels
 {
     public class RecipeViewModel
     {

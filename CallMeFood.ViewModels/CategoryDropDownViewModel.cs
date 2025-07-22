@@ -1,6 +1,6 @@
 ﻿namespace CallMeFood.ViewModels
 {
-    public class CategoryViewModel
+    public class CategoryDropDownViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
