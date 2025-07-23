@@ -6,14 +6,17 @@ namespace CallMeFood.Services
     using CallMeFood.Services.Interfaces;
     using CallMeFood.ViewModels.RecipeViewModels;
     using Microsoft.EntityFrameworkCore;
+    using CallMeFood.ViewModels.CommentViewModels;
 
     public class RecipeService : IRecipeService
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICommentService _commentService;
 
-        public RecipeService(ApplicationDbContext context)
+        public RecipeService(ApplicationDbContext context, ICommentService commentService)
         {
             _context = context;
+            _commentService = commentService;
         }
 
         // get all recipes
@@ -72,33 +75,40 @@ namespace CallMeFood.Services
             await _context.SaveChangesAsync();
         }
 
-
         public async Task<RecipeDetailsViewModel?> GetByIdAsync(int id)
         {
             var recipe = await _context.Recipes
                 .Include(r => r.Category)
                 .Include(r => r.User)
-                .Include(r => r.Ingredients)
                 .Include(r => r.Comments)
-                .FirstOrDefaultAsync(r => r.Id == id);
+                    .ThenInclude(c => c.User) // IMPORTANT
+                .FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted);
 
-            if (recipe == null)
-                return null;
+            if (recipe == null) return null;
 
             return new RecipeDetailsViewModel
             {
                 Id = recipe.Id,
                 Title = recipe.Title,
                 Description = recipe.Description,
-                CategoryName = recipe.Category?.Name ?? "Unknown",
-                AuthorName = recipe.User?.UserName ?? "Unknown",
-                CreatedOn = recipe.CreatedOn,
                 Instructions = recipe.Instructions,
-                ImageUrl = recipe.ImageUrl ?? string.Empty,
-                Ingredients = recipe.Ingredients.Select(i => i.Quantity + " " + i.Name).ToList(),
-                Comments = recipe.Comments.Select(c => c.Content).ToList()
+                CategoryId = recipe.CategoryId,
+                CategoryName = recipe.Category.Name,
+                AuthorName = recipe.User.UserName ?? "Unknown",
+                AuthorId = recipe.UserId,
+                CreatedOn = recipe.CreatedOn,
+                ImageUrl = recipe.ImageUrl = null!,
+                Ingredients = recipe.Ingredients.Select(i => $"{i.Quantity} {i.Name}").ToList(),
+                Comments = recipe.Comments.Select(c => new CommentViewModel
+                {
+                    Id = c.Id,
+                    Content = c.Content,
+                    CreatedOn = c.CreatedOn,
+                    UserName = c.User?.UserName ?? "Unknown" // SAFE HERE
+                }).ToList()
             };
         }
+
 
         public Task<IEnumerable<Recipe>> GetByUserIdAsync(string userId)
         {

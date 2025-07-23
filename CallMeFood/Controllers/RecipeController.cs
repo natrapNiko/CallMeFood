@@ -17,18 +17,18 @@ namespace CallMeFood.Web.Controllers
 
         private readonly IRecipeService _recipeService;
         private readonly ICategoryService _categoryService;
+        private readonly ICommentService _commentService;
 
-        public RecipeController(IRecipeService recipeService, ICategoryService categoryService, UserManager<ApplicationUser> userManager)
+        public RecipeController(IRecipeService recipeService, ICategoryService categoryService, UserManager<ApplicationUser> userManager, ICommentService commentService)
         {
             _recipeService = recipeService;
             _categoryService = categoryService;
             _userManager = userManager;
+            _commentService = commentService;
         }
 
         [HttpGet]
-        [AllowAnonymous] //available to unregistered users
-        //GET: Recipe
-        [Route("Recipes")]
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int page = 1)
         {
             int pageSize = 6;
@@ -47,17 +47,35 @@ namespace CallMeFood.Web.Controllers
             return View(viewModel);
         }
 
+
         //GET: Recipe/Details/5
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var recipe = await _recipeService.GetByIdAsync(id);
-            //Check if the recipe exists
             if (recipe == null)
             {
                 return NotFound();
             }
-            return View(recipe);
+
+            var comments = await _commentService.GetByRecipeIdAsync(id);
+
+            var viewModel = new RecipeDetailsViewModel
+            {
+                Id = recipe.Id,
+                Title = recipe.Title,
+                Description = recipe.Description,
+                Instructions = recipe.Instructions,
+                ImageUrl = recipe.ImageUrl,
+                CategoryName = recipe.CategoryName,
+                AuthorName = recipe.AuthorName,
+                CreatedOn = recipe.CreatedOn,
+                AuthorId = recipe.AuthorId,
+                Comments = comments.ToList(),
+                NewCommentContent = string.Empty
+            };
+
+            return View(viewModel);
         }
 
         //GET: Recipe/Create
@@ -158,5 +176,23 @@ namespace CallMeFood.Web.Controllers
             await _recipeService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddComment(int id, string content)
+        {
+            var userId = _userManager.GetUserId(User);
+            if (string.IsNullOrWhiteSpace(content) || userId == null)
+            {
+                // Optionally show error message
+                return RedirectToAction("Details", new { id });
+            }
+
+            await _commentService.AddAsync(id, userId, content);
+
+            return RedirectToAction("Details", new { id }); // THIS TRIGGERS FRESH DB LOAD
+        }
+
+
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace CallMeFood.ViewModels.RecipeViewModels
+﻿using CallMeFood.ViewModels.CommentViewModels;
+
+namespace CallMeFood.ViewModels.RecipeViewModels
 {
     public class RecipeDetailsViewModel
     {
@@ -11,9 +13,13 @@
         public DateTime CreatedOn { get; set; }
         public string Instructions { get; set; } = null!;
         public string ImageUrl { get; set; } = null!;
-
-        public List<string> Ingredients { get; set; } = new List<string>();
-        public List<string> Comments { get; set; } = new List<string>();
         public string? AuthorId { get; set; }
+
+        public string NewCommentContent { get; set; } = null!;
+
+        //navigation properties
+        public List<string> Ingredients { get; set; } = new List<string>();
+        public List<CommentViewModel> Comments { get; set; } = new List<CommentViewModel>();
+
     }
 }

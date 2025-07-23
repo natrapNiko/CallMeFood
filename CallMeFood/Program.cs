@@ -34,6 +34,7 @@ builder.Services.AddControllersWithViews();
 // Register services
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddRazorPages();
 
