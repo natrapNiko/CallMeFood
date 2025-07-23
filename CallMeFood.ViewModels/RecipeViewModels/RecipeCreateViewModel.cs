@@ -15,7 +15,7 @@ namespace CallMeFood.ViewModels.RecipeViewModels
 
 
         // For dropdowns Menu
-        public IEnumerable<CategoryDropDownViewModel>? Categories { get; set; }
+        public IEnumerable<CategoryDropDownViewModel>? Categories { get; set; } = new HashSet<CategoryDropDownViewModel>();
     }
 
 }

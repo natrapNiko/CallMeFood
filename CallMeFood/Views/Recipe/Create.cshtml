@@ -1,45 +1,52 @@
-﻿@using CallMeFood.ViewModels;
-@using CallMeFood.ViewModels.RecipeViewModels
+﻿@using CallMeFood.ViewModels.RecipeViewModels
 @model RecipeCreateViewModel
 
 @{
-    ViewData["Title"] = "Create Recipe";
+    ViewData["Title"] = "Share a Recipe";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-success">🍽️ Share a New Recipe</h2>
 
-<form asp-action="Create" method="post">
-    <div>
-        <label asp-for="Title"></label>
-        <input asp-for="Title" />
-        <span asp-validation-for="Title"></span>
-    </div>
-    <div>
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description"></textarea>
-        <span asp-validation-for="Description"></span>
-    </div>
-    <div>
-        <label asp-for="Instructions"></label>
-        <textarea asp-for="Instructions"></textarea>
-        <span asp-validation-for="Instructions"></span>
-    </div>
-    <div>
-        <label asp-for="CategoryId"></label>
-        <select asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
-            <option value="">-- Select Category --</option>
-        </select>
-        <span asp-validation-for="CategoryId"></span>
-    </div>
-    <div>
-        <label asp-for="ImageUrl"></label>
-        <input asp-for="ImageUrl" />
-        <span asp-validation-for="ImageUrl"></span>
-    </div>
-    <div>
-        <button type="submit">Create</button>
-    </div>
-</form>
+    <form asp-action="Create" method="post" class="border p-4 shadow-sm rounded bg-light">
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label fw-bold">Title</label>
+            <input asp-for="Title" class="form-control" placeholder="Enter recipe title..." />
+            <span asp-validation-for="Title" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label fw-bold">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Write a short description..."></textarea>
+            <span asp-validation-for="Description" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Instructions" class="form-label fw-bold">Instructions</label>
+            <textarea asp-for="Instructions" class="form-control" rows="5" placeholder="Explain how to cook the recipe..."></textarea>
+            <span asp-validation-for="Instructions" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ImageUrl" class="form-label fw-bold">Image URL</label>
+            <input asp-for="ImageUrl" class="form-control" placeholder="Optional image link" />
+            <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CategoryId" class="form-label fw-bold">Category</label>
+            <select asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))" class="form-select">
+                <option value="">-- Choose Category --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger small"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+            <button type="submit" class="btn btn-success">Share Recipe</button>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

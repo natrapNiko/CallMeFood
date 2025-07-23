@@ -1,0 +1,19 @@
+﻿@using CallMeFood.ViewModels.CategoryViewModels
+
+@model CategoryViewModel
+
+@{
+    ViewData["Title"] = "Delete Category";
+}
+
+<h2 class="text-center mb-4 text-danger">🗑️ Delete Category</h2>
+
+<div class="alert alert-danger text-center w-50 mx-auto">
+    Are you sure you want to delete the category: <strong>@Model.Name</strong>?
+</div>
+
+<form asp-action="Delete" method="post" class="text-center">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger me-2">Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

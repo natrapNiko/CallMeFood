@@ -16,53 +16,74 @@ namespace CallMeFood.Services
             _context = context;
         }
 
-        public Task AddAsync(Category category)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<CategoryViewModel>> GetAllAsync()
         {
             return await _context.Categories
-            .Select(c => new CategoryViewModel
-            {
-                Id = c.Id,
-                Name = c.Name
-            })
-            .ToListAsync();
+                .Select(c => new CategoryViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToListAsync();
         }
 
-        public Task<Category?> GetByIdAsync(int id)
+        public async Task<CategoryViewModel?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null) return null;
+
+            return new CategoryViewModel
+            {
+                Id = category.Id,
+                Name = category.Name
+            };
+        }
+
+        public async Task CreateAsync(CategoryViewModel model)
+        {
+            var category = new Category
+            {
+                Name = model.Name
+            };
+
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(CategoryViewModel model)
+        {
+            var category = await _context.Categories.FindAsync(model.Id);
+            if (category == null) return;
+
+            category.Name = model.Name;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null) return;
+
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<RecipeViewModel>> GetRecipesByCategoryIdAsync(int categoryId)
         {
             return await _context.Recipes
-            .Where(r => r.CategoryId == categoryId && !r.IsDeleted)
-            .Select(r => new RecipeViewModel
-            {
-                Id = r.Id,
-                Title = r.Title,
-                Description = r.Description,
-                ImageUrl = r.ImageUrl,
-                CategoryName = r.Category.Name,
-                AuthorName = r.User.UserName ?? null!,
-                CreatedOn = r.CreatedOn,
-                AuthorId = r.UserId
-            })
-            .ToListAsync();
-        }
-
-        public Task UpdateAsync(Category category)
-        {
-            throw new NotImplementedException();
+                .Where(r => r.CategoryId == categoryId && !r.IsDeleted)
+                .Select(r => new RecipeViewModel
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Description = r.Description,
+                    CategoryName = r.Category.Name,
+                    CreatedOn = r.CreatedOn,
+                    AuthorName = r.User.UserName ?? "Unknown",
+                    ImageUrl = r.ImageUrl,
+                    AuthorId = r.UserId
+                })
+                .ToListAsync();
         }
     }
 

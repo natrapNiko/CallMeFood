@@ -3,6 +3,7 @@ namespace CallMeFood.Web.Controllers
 {
     using CallMeFood.Data.Models;
     using CallMeFood.Services.Interfaces;
+    using CallMeFood.ViewModels;
     using CallMeFood.ViewModels.CategoryViewModels;
     using CallMeFood.ViewModels.RecipeViewModels;
     using Microsoft.AspNetCore.Authorization;
@@ -63,14 +64,22 @@ namespace CallMeFood.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            //Get categories for dropdown
             var categories = await _categoryService.GetAllAsync();
+
             var viewModel = new RecipeCreateViewModel
             {
-                Categories = (IEnumerable<ViewModels.CategoryDropDownViewModel>)categories.Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name }).ToList()
+                Categories = categories
+                    .Select(c => new CategoryDropDownViewModel
+                    {
+                        Id = c.Id,
+                        Name = c.Name
+                    })
+                    .ToList()
             };
+
             return View(viewModel);
         }
+
 
         // POST: Recipe/Create
         [HttpPost]

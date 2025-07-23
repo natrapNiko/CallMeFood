@@ -1,9 +1,11 @@
-﻿using CallMeFood.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
+﻿
 namespace CallMeFood.Controllers
 {
+    using CallMeFood.Services.Interfaces;
+    using CallMeFood.ViewModels.CategoryViewModels;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
@@ -32,5 +34,87 @@ namespace CallMeFood.Controllers
             ViewBag.CategoryId = id;
             return View(recipes);
         }
+
+        // Details (GET)
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var category = await _categoryService.GetByIdAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            var recipes = await _categoryService.GetRecipesByCategoryIdAsync(id);
+
+            var viewModel = new CategoryDetailsViewModel
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Recipes = recipes.ToList()
+            };
+
+            return View(viewModel);
+        }
+
+        // Create (GET)
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // Create (POST)
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Create(CategoryViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            await _categoryService.CreateAsync(model);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Edit (GET)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var category = await _categoryService.GetByIdAsync(id);
+            if (category == null) return NotFound();
+
+            return View(category);
+        }
+
+        // Edit (POST)
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, CategoryViewModel model)
+        {
+            if (id != model.Id) return BadRequest();
+            if (!ModelState.IsValid) return View(model);
+
+            await _categoryService.UpdateAsync(model);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Delete (GET)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var category = await _categoryService.GetByIdAsync(id);
+            if (category == null) return NotFound();
+
+            return View(category);
+        }
+
+        // Delete (POST)
+        [Authorize(Roles = "Admin")]
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _categoryService.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
