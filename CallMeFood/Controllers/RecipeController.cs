@@ -178,21 +178,13 @@ namespace CallMeFood.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> AddComment(int id, string content)
         {
-            var userId = _userManager.GetUserId(User);
-            if (string.IsNullOrWhiteSpace(content) || userId == null)
-            {
-                // Optionally show error message
-                return RedirectToAction("Details", new { id });
-            }
-
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             await _commentService.AddAsync(id, userId, content);
 
-            return RedirectToAction("Details", new { id }); // THIS TRIGGERS FRESH DB LOAD
+            return RedirectToAction("Details", new { id });
         }
-
-
     }
 }

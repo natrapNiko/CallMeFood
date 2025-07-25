@@ -56,7 +56,7 @@
             {
                 <hr />
                 <form asp-action="AddComment" method="post">
-                    <input type="hidden" name="recipeId" value="@Model.Id" />
+                    <input type="hidden" name="Id" value="@Model.Id" />
                     <div class="mb-3">
                         <label for="newComment" class="form-label">Add a comment:</label>
                         <textarea name="content" class="form-control" id="newComment" required></textarea>

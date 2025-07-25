@@ -16,19 +16,28 @@ namespace CallMeFood.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Add(int recipeId, string content)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             if (string.IsNullOrWhiteSpace(content))
             {
-                TempData["Error"] = "Comment content cannot be empty.";
                 return RedirectToAction("Details", "Recipe", new { id = recipeId });
             }
 
-            await _commentService.AddAsync(recipeId, userId!, content);
+            try
+            {
+                await _commentService.AddAsync(recipeId, userId, content);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
             return RedirectToAction("Details", "Recipe", new { id = recipeId });
         }
+
 
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
