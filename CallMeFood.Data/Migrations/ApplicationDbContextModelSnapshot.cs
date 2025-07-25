@@ -89,33 +89,17 @@ namespace CallMeFood.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "seed-user-1",
+                            Id = "7699db63-964f-7682-82609-d76562e346ce",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1c91ab97-feab-4a5d-b210-15195276e757",
-                            Email = "admin@callmefood.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@CALLMEFOOD.COM",
-                            NormalizedUserName = "ADMIN@CALLMEFOOD.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGzBe4KpVkdlqhk3HHinDZ6Wn9cF3BVsASe5N1IZA8HOqTFNTJE1XLWI1fskrALLfA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "a877de62-7d83-4877-8fd8-99c0dd3c0721",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@callmefood.com"
-                        },
-                        new
-                        {
-                            Id = "seed-user-2",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "01058b64-bee5-4d6c-a58c-d6ab98256905",
+                            ConcurrencyStamp = "1f404b90-da5a-4574-8ff1-94c7e0e649fd",
                             Email = "user@callmefood.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@CALLMEFOOD.COM",
                             NormalizedUserName = "USER@CALLMEFOOD.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDqRA8He8GqEzNTZY3/as33+IiwVKwC+ZJQ6kvJjgNuIg5d5h3kEPXkoL/8r1eFTDg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMCL9x4XxcZFLzzUs1WcW3xFjQ4mZRbC35ydxno/Fp3/ZXa+KVDf0IeKjqH7dVM7oA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "927fef0b-5051-4a4a-990b-75958936f5bd",
+                            SecurityStamp = "de6ad437-8cc9-4056-95e6-bc5da7d088a1",
                             TwoFactorEnabled = false,
                             UserName = "user@callmefood.com"
                         });
@@ -197,17 +181,17 @@ namespace CallMeFood.Data.Migrations
                         {
                             Id = 1,
                             Content = "Great salad, easy to make!",
-                            CreatedOn = new DateTime(2025, 7, 23, 18, 33, 41, 885, DateTimeKind.Utc).AddTicks(4714),
+                            CreatedOn = new DateTime(2025, 7, 25, 19, 50, 35, 252, DateTimeKind.Utc).AddTicks(4953),
                             RecipeId = 1,
-                            UserId = "seed-user-2"
+                            UserId = "7699db63-964f-7682-82609-d76562e346ce"
                         },
                         new
                         {
                             Id = 2,
                             Content = "Cake was super moist and delicious.",
-                            CreatedOn = new DateTime(2025, 7, 23, 18, 33, 41, 885, DateTimeKind.Utc).AddTicks(4719),
+                            CreatedOn = new DateTime(2025, 7, 25, 19, 50, 35, 252, DateTimeKind.Utc).AddTicks(4958),
                             RecipeId = 2,
-                            UserId = "seed-user-1"
+                            UserId = "7699db63-964f-7682-82609-d76562e346ce"
                         });
                 });
 
@@ -241,16 +225,16 @@ namespace CallMeFood.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2025, 7, 23, 18, 33, 41, 888, DateTimeKind.Utc).AddTicks(6921),
+                            CreatedOn = new DateTime(2025, 7, 25, 19, 50, 35, 253, DateTimeKind.Utc).AddTicks(4850),
                             RecipeId = 1,
-                            UserId = "seed-user-2"
+                            UserId = "7699db63-964f-7682-82609-d76562e346ce"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2025, 7, 23, 18, 33, 41, 888, DateTimeKind.Utc).AddTicks(6930),
+                            CreatedOn = new DateTime(2025, 7, 25, 19, 50, 35, 253, DateTimeKind.Utc).AddTicks(4855),
                             RecipeId = 2,
-                            UserId = "seed-user-1"
+                            UserId = "7699db63-964f-7682-82609-d76562e346ce"
                         });
                 });
 
@@ -380,73 +364,73 @@ namespace CallMeFood.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2025, 7, 23, 18, 33, 41, 891, DateTimeKind.Utc).AddTicks(5513),
+                            CreatedOn = new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8554),
                             Description = "A timeless salad with romaine, croutons, and parmesan.",
                             ImageUrl = "https://www.allrecipes.com/thmb/GKJL13Wb8TZ9hpJ9c70v0aNXsyQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/229063-Classic-Restaurant-Caesar-Salad-ddmfs-4x3-231-89bafa5e54dd4a8c933cf2a5f9f12a6f.jpg",
                             Instructions = "Toss all ingredients. Add dressing. Serve chilled.",
                             IsDeleted = false,
                             Title = "Classic Caesar Salad",
-                            UserId = "seed-user-1"
+                            UserId = "7699db63-964f-7682-82609-d76562e346ce"
                         },
                         new
                         {
                             Id = 2,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2025, 7, 23, 18, 33, 41, 891, DateTimeKind.Utc).AddTicks(5524),
+                            CreatedOn = new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8565),
                             Description = "Rich chocolate cake for dessert lovers.",
                             ImageUrl = "https://www.allrecipes.com/thmb/E4m_2-kD9C_w5E9kKa2gxiWAc1o=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/5959101-46973ebb82bc4ec3878c5ae0b128626f.jpg",
                             Instructions = "Mix, bake, cool, and frost.",
                             IsDeleted = false,
                             Title = "Homemade Chocolate Cake",
-                            UserId = "seed-user-2"
+                            UserId = "7699db63-964f-7682-82609-d76562e346ce"
                         },
                         new
                         {
                             Id = 3,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2025, 7, 23, 18, 33, 41, 891, DateTimeKind.Utc).AddTicks(5530),
+                            CreatedOn = new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8569),
                             Description = "Classic Italian pasta dish with eggs, cheese, pancetta, and pepper.",
                             ImageUrl = "https://www.allrecipes.com/thmb/zJzTLhtUWknHXVoFIzysljJ9wR8=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/11973-spaghetti-carbonara-ii-DDMFS-4x3-6edea51e421e4457ac0c3269f3be5157.jpg",
                             Instructions = "Cook pasta. Sauté pancetta. Mix with eggs and cheese. Combine.",
                             IsDeleted = false,
                             Title = "Spaghetti Carbonara",
-                            UserId = "seed-user-1"
+                            UserId = "7699db63-964f-7682-82609-d76562e346ce"
                         },
                         new
                         {
                             Id = 4,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2025, 7, 23, 18, 33, 41, 891, DateTimeKind.Utc).AddTicks(5535),
+                            CreatedOn = new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8572),
                             Description = "Healthy layered snack with yogurt, fruit, and granola.",
                             ImageUrl = "https://www.allrecipes.com/thmb/psuwM2WSiNw59zyQQJFEO-FehOA=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/5645992-63053852193740bba385f0abb5334ad0.jpg",
                             Instructions = "Layer yogurt, fruit, and granola in a glass. Chill and serve.",
                             IsDeleted = false,
                             Title = "Greek Yogurt Parfait",
-                            UserId = "seed-user-2"
+                            UserId = "7699db63-964f-7682-82609-d76562e346ce"
                         },
                         new
                         {
                             Id = 5,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2025, 7, 23, 18, 33, 41, 891, DateTimeKind.Utc).AddTicks(5540),
+                            CreatedOn = new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8575),
                             Description = "Quick Asian-style stir-fried chicken with vegetables.",
                             ImageUrl = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F04%2F29%2F223382_chicken-stir-fry_Rita-1x1-1.jpg&q=60&c=sc&poi=auto&orient=true&h=512",
                             Instructions = "Cook chicken. Stir-fry vegetables. Mix with sauce. Serve with rice.",
                             IsDeleted = false,
-                            Title = "Chicken Stir Fry",
-                            UserId = "seed-user-1"
+                            Title = "7699db63-964f-7682-82609-d76562e346ce",
+                            UserId = "7699db63-964f-7682-82609-d76562e346ce"
                         },
                         new
                         {
                             Id = 6,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2025, 7, 23, 18, 33, 41, 891, DateTimeKind.Utc).AddTicks(5547),
+                            CreatedOn = new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8582),
                             Description = "Fluffy pancakes loaded with fresh blueberries.",
                             ImageUrl = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F05%2F27%2F686460-todds-famous-blueberry-pancakes-Dianne-1x1-1.jpg&q=60&c=sc&poi=auto&orient=true&h=512",
                             Instructions = "Mix batter. Fold in blueberries. Cook on griddle. Serve warm.",
                             IsDeleted = false,
                             Title = "Blueberry Pancakes",
-                            UserId = "seed-user-2"
+                            UserId = "7699db63-964f-7682-82609-d76562e346ce"
                         });
                 });
 
@@ -475,20 +459,6 @@ namespace CallMeFood.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "role-admin-id",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "role-user-id",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -578,18 +548,6 @@ namespace CallMeFood.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "seed-user-1",
-                            RoleId = "role-admin-id"
-                        },
-                        new
-                        {
-                            UserId = "seed-user-2",
-                            RoleId = "role-user-id"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

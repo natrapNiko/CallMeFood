@@ -2,6 +2,7 @@ using CallMeFood.Data;
 using CallMeFood.Data.Models;
 using CallMeFood.Services;
 using CallMeFood.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -31,10 +32,14 @@ builder.Services
 
 builder.Services.AddControllersWithViews();
 
+
 // Register services
+
+
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+
 
 builder.Services.AddRazorPages();
 

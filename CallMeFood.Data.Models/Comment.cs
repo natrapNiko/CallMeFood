@@ -1,5 +1,8 @@
-﻿namespace CallMeFood.Data.Models
+﻿
+namespace CallMeFood.Data.Models
 {
+    using Microsoft.AspNetCore.Identity;
+
     public class Comment
     {
         public int Id { get; set; }

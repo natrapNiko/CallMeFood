@@ -30,19 +30,6 @@ namespace CallMeFood.Data
             //application of configurations
             modelBuilder
                 .ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-
-            // Seed Identity roles
-            modelBuilder.Entity<IdentityRole>().HasData(
-                new IdentityRole { Id = "role-admin-id", Name = "Admin", NormalizedName = "ADMIN" },
-                new IdentityRole { Id = "role-user-id", Name = "User", NormalizedName = "USER" }
-            );
-
-            // Seed user-role relationships
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string> { UserId = "seed-user-1", RoleId = "role-admin-id" },
-                new IdentityUserRole<string> { UserId = "seed-user-2", RoleId = "role-user-id" }
-            );
         }
     }
 }

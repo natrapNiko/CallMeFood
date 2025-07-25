@@ -7,16 +7,19 @@ namespace CallMeFood.Services
     using CallMeFood.ViewModels.RecipeViewModels;
     using Microsoft.EntityFrameworkCore;
     using CallMeFood.ViewModels.CommentViewModels;
+    using Microsoft.AspNetCore.Http;
 
     public class RecipeService : IRecipeService
     {
         private readonly ApplicationDbContext _context;
         private readonly ICommentService _commentService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RecipeService(ApplicationDbContext context, ICommentService commentService)
+        public RecipeService(ApplicationDbContext context, ICommentService commentService, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _commentService = commentService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // get all recipes
@@ -58,33 +61,30 @@ namespace CallMeFood.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(RecipeEditViewModel model)
-        {
-            var recipe = await _context.Recipes.FindAsync(model.Id);
-
-            if (recipe == null || recipe.IsDeleted)
-                throw new ArgumentException("Recipe not found.");
-
-            recipe.Title = model.Title;
-            recipe.Description = model.Description;
-            recipe.Instructions = model.Instructions;
-            recipe.CategoryId = model.CategoryId;
-            recipe.ImageUrl = model.ImageUrl;
-            // Optionally: recipe.UpdatedOn = DateTime.UtcNow;
-
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<RecipeDetailsViewModel?> GetByIdAsync(int id)
         {
             var recipe = await _context.Recipes
-                .Include(r => r.Category)
-                .Include(r => r.User)
-                .Include(r => r.Comments)
-                    .ThenInclude(c => c.User) // IMPORTANT
-                .FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted);
+        .Include(r => r.Category)
+        .Include(r => r.User)
+        .Include(r => r.Comments)
+            .ThenInclude(c => c.User)
+        .FirstOrDefaultAsync(r => r.Id == id);
 
-            if (recipe == null) return null;
+            if (recipe == null)
+            {
+                return null;
+            }
+
+            var userId = _httpContextAccessor.HttpContext?.User?
+                .FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            bool isFavorite = false;
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                isFavorite = await _context.Favorites
+                    .AnyAsync(f => f.UserId == userId && f.RecipeId == recipe.Id);
+            }
 
             return new RecipeDetailsViewModel
             {
@@ -92,29 +92,25 @@ namespace CallMeFood.Services
                 Title = recipe.Title,
                 Description = recipe.Description,
                 Instructions = recipe.Instructions,
+                ImageUrl = recipe.ImageUrl ?? null!,
                 CategoryId = recipe.CategoryId,
                 CategoryName = recipe.Category.Name,
                 AuthorName = recipe.User.UserName ?? "Unknown",
                 AuthorId = recipe.UserId,
                 CreatedOn = recipe.CreatedOn,
-                ImageUrl = recipe.ImageUrl = null!,
-                Ingredients = recipe.Ingredients.Select(i => $"{i.Quantity} {i.Name}").ToList(),
+                Ingredients = recipe.Ingredients.Select(i => i.Name).ToList(),
                 Comments = recipe.Comments.Select(c => new CommentViewModel
                 {
                     Id = c.Id,
                     Content = c.Content,
                     CreatedOn = c.CreatedOn,
-                    UserName = c.User?.UserName ?? "Unknown" // SAFE HERE
-                }).ToList()
+                    UserName = c.User.UserName
+                }).ToList(),
+
+                IsFavorite = isFavorite // ← this is the key!
             };
         }
-
-
-        public Task<IEnumerable<Recipe>> GetByUserIdAsync(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
+            
         public Task<IEnumerable<Recipe>> GetLatestAsync(int count)
         {
             throw new NotImplementedException();
@@ -176,6 +172,16 @@ namespace CallMeFood.Services
                 recipe.IsDeleted = true; // soft delete
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public Task UpdateAsync(RecipeEditViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Recipe>> GetByUserIdAsync(string userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

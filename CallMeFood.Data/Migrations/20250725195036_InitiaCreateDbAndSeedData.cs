@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CallMeFood.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDbCreateAndSeedData : Migration
+    public partial class InitiaCreateDbAndSeedData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -280,22 +280,9 @@ namespace CallMeFood.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "role-admin-id", null, "Admin", "ADMIN" },
-                    { "role-user-id", null, "User", "USER" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { "seed-user-1", 0, "1041ba2e-e26d-43ef-aa21-2bd7d674b222", "admin@callmefood.com", true, false, null, "ADMIN@CALLMEFOOD.COM", "ADMIN@CALLMEFOOD.COM", "AQAAAAIAAYagAAAAEHfOt5jYAs26dp/gUXeHfQa9m9z8hrMT8l5eXNw66F2nvcBTtsJkAevCyxYww6AtRw==", null, false, "384f2dfc-61b0-40b2-a7ed-9433c4acc8ab", false, "admin@callmefood.com" },
-                    { "seed-user-2", 0, "15f28091-f9e3-4260-88b4-3b637c971ef4", "user@callmefood.com", true, false, null, "USER@CALLMEFOOD.COM", "USER@CALLMEFOOD.COM", "AQAAAAIAAYagAAAAEOzYtPjzLzjbNx3KWg/1UvvchQyalsZVeakPjSDeXYJAKzqybtg4tUZFt7eFaz2n2w==", null, false, "83adee4f-51fd-4549-b1d8-68530b6a1901", false, "user@callmefood.com" }
-                });
+                values: new object[] { "7699db63-964f-7682-82609-d76562e346ce", 0, "1f404b90-da5a-4574-8ff1-94c7e0e649fd", "user@callmefood.com", true, false, null, "USER@CALLMEFOOD.COM", "USER@CALLMEFOOD.COM", "AQAAAAIAAYagAAAAEMCL9x4XxcZFLzzUs1WcW3xFjQ4mZRbC35ydxno/Fp3/ZXa+KVDf0IeKjqH7dVM7oA==", null, false, "de6ad437-8cc9-4056-95e6-bc5da7d088a1", false, "user@callmefood.com" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -309,25 +296,16 @@ namespace CallMeFood.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[,]
-                {
-                    { "role-admin-id", "seed-user-1" },
-                    { "role-user-id", "seed-user-2" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Recipes",
                 columns: new[] { "Id", "CategoryId", "CreatedOn", "Description", "ImageUrl", "Instructions", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6528), "A timeless salad with romaine, croutons, and parmesan.", "https://www.allrecipes.com/thmb/GKJL13Wb8TZ9hpJ9c70v0aNXsyQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/229063-Classic-Restaurant-Caesar-Salad-ddmfs-4x3-231-89bafa5e54dd4a8c933cf2a5f9f12a6f.jpg", "Toss all ingredients. Add dressing. Serve chilled.", "Classic Caesar Salad", "seed-user-1" },
-                    { 2, 3, new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6534), "Rich chocolate cake for dessert lovers.", "https://www.allrecipes.com/thmb/E4m_2-kD9C_w5E9kKa2gxiWAc1o=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/5959101-46973ebb82bc4ec3878c5ae0b128626f.jpg", "Mix, bake, cool, and frost.", "Homemade Chocolate Cake", "seed-user-2" },
-                    { 3, 2, new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6536), "Classic Italian pasta dish with eggs, cheese, pancetta, and pepper.", "https://www.allrecipes.com/thmb/zJzTLhtUWknHXVoFIzysljJ9wR8=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/11973-spaghetti-carbonara-ii-DDMFS-4x3-6edea51e421e4457ac0c3269f3be5157.jpg", "Cook pasta. Sauté pancetta. Mix with eggs and cheese. Combine.", "Spaghetti Carbonara", "seed-user-1" },
-                    { 4, 1, new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6538), "Healthy layered snack with yogurt, fruit, and granola.", "https://www.allrecipes.com/thmb/psuwM2WSiNw59zyQQJFEO-FehOA=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/5645992-63053852193740bba385f0abb5334ad0.jpg", "Layer yogurt, fruit, and granola in a glass. Chill and serve.", "Greek Yogurt Parfait", "seed-user-2" },
-                    { 5, 2, new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6540), "Quick Asian-style stir-fried chicken with vegetables.", "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F04%2F29%2F223382_chicken-stir-fry_Rita-1x1-1.jpg&q=60&c=sc&poi=auto&orient=true&h=512", "Cook chicken. Stir-fry vegetables. Mix with sauce. Serve with rice.", "Chicken Stir Fry", "seed-user-1" },
-                    { 6, 1, new DateTime(2025, 7, 21, 19, 42, 14, 577, DateTimeKind.Utc).AddTicks(6543), "Fluffy pancakes loaded with fresh blueberries.", "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F05%2F27%2F686460-todds-famous-blueberry-pancakes-Dianne-1x1-1.jpg&q=60&c=sc&poi=auto&orient=true&h=512", "Mix batter. Fold in blueberries. Cook on griddle. Serve warm.", "Blueberry Pancakes", "seed-user-2" }
+                    { 1, 1, new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8554), "A timeless salad with romaine, croutons, and parmesan.", "https://www.allrecipes.com/thmb/GKJL13Wb8TZ9hpJ9c70v0aNXsyQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/229063-Classic-Restaurant-Caesar-Salad-ddmfs-4x3-231-89bafa5e54dd4a8c933cf2a5f9f12a6f.jpg", "Toss all ingredients. Add dressing. Serve chilled.", "Classic Caesar Salad", "7699db63-964f-7682-82609-d76562e346ce" },
+                    { 2, 3, new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8565), "Rich chocolate cake for dessert lovers.", "https://www.allrecipes.com/thmb/E4m_2-kD9C_w5E9kKa2gxiWAc1o=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/5959101-46973ebb82bc4ec3878c5ae0b128626f.jpg", "Mix, bake, cool, and frost.", "Homemade Chocolate Cake", "7699db63-964f-7682-82609-d76562e346ce" },
+                    { 3, 2, new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8569), "Classic Italian pasta dish with eggs, cheese, pancetta, and pepper.", "https://www.allrecipes.com/thmb/zJzTLhtUWknHXVoFIzysljJ9wR8=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/11973-spaghetti-carbonara-ii-DDMFS-4x3-6edea51e421e4457ac0c3269f3be5157.jpg", "Cook pasta. Sauté pancetta. Mix with eggs and cheese. Combine.", "Spaghetti Carbonara", "7699db63-964f-7682-82609-d76562e346ce" },
+                    { 4, 1, new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8572), "Healthy layered snack with yogurt, fruit, and granola.", "https://www.allrecipes.com/thmb/psuwM2WSiNw59zyQQJFEO-FehOA=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/5645992-63053852193740bba385f0abb5334ad0.jpg", "Layer yogurt, fruit, and granola in a glass. Chill and serve.", "Greek Yogurt Parfait", "7699db63-964f-7682-82609-d76562e346ce" },
+                    { 5, 2, new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8575), "Quick Asian-style stir-fried chicken with vegetables.", "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F04%2F29%2F223382_chicken-stir-fry_Rita-1x1-1.jpg&q=60&c=sc&poi=auto&orient=true&h=512", "Cook chicken. Stir-fry vegetables. Mix with sauce. Serve with rice.", "7699db63-964f-7682-82609-d76562e346ce", "7699db63-964f-7682-82609-d76562e346ce" },
+                    { 6, 1, new DateTime(2025, 7, 25, 19, 50, 35, 254, DateTimeKind.Utc).AddTicks(8582), "Fluffy pancakes loaded with fresh blueberries.", "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F05%2F27%2F686460-todds-famous-blueberry-pancakes-Dianne-1x1-1.jpg&q=60&c=sc&poi=auto&orient=true&h=512", "Mix batter. Fold in blueberries. Cook on griddle. Serve warm.", "Blueberry Pancakes", "7699db63-964f-7682-82609-d76562e346ce" }
                 });
 
             migrationBuilder.InsertData(
@@ -335,8 +313,8 @@ namespace CallMeFood.Data.Migrations
                 columns: new[] { "Id", "Content", "CreatedOn", "RecipeId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Great salad, easy to make!", new DateTime(2025, 7, 21, 19, 42, 14, 576, DateTimeKind.Utc).AddTicks(2773), 1, "seed-user-2" },
-                    { 2, "Cake was super moist and delicious.", new DateTime(2025, 7, 21, 19, 42, 14, 576, DateTimeKind.Utc).AddTicks(2775), 2, "seed-user-1" }
+                    { 1, "Great salad, easy to make!", new DateTime(2025, 7, 25, 19, 50, 35, 252, DateTimeKind.Utc).AddTicks(4953), 1, "7699db63-964f-7682-82609-d76562e346ce" },
+                    { 2, "Cake was super moist and delicious.", new DateTime(2025, 7, 25, 19, 50, 35, 252, DateTimeKind.Utc).AddTicks(4958), 2, "7699db63-964f-7682-82609-d76562e346ce" }
                 });
 
             migrationBuilder.InsertData(
@@ -344,8 +322,8 @@ namespace CallMeFood.Data.Migrations
                 columns: new[] { "Id", "CreatedOn", "RecipeId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 7, 21, 19, 42, 14, 576, DateTimeKind.Utc).AddTicks(5080), 1, "seed-user-2" },
-                    { 2, new DateTime(2025, 7, 21, 19, 42, 14, 576, DateTimeKind.Utc).AddTicks(5082), 2, "seed-user-1" }
+                    { 1, new DateTime(2025, 7, 25, 19, 50, 35, 253, DateTimeKind.Utc).AddTicks(4850), 1, "7699db63-964f-7682-82609-d76562e346ce" },
+                    { 2, new DateTime(2025, 7, 25, 19, 50, 35, 253, DateTimeKind.Utc).AddTicks(4855), 2, "7699db63-964f-7682-82609-d76562e346ce" }
                 });
 
             migrationBuilder.InsertData(

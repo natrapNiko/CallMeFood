@@ -1,4 +1,5 @@
-﻿namespace CallMeFood.Data.Models
+﻿
+namespace CallMeFood.Data.Models
 {
     public class Favorite
     {

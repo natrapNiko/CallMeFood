@@ -1,5 +1,7 @@
-﻿namespace CallMeFood.Data.Models
+﻿
+namespace CallMeFood.Data.Models
 {
+    using Microsoft.AspNetCore.Identity;
     public class Recipe
     {
         public int Id { get; set; }

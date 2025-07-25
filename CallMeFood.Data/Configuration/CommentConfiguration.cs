@@ -42,7 +42,7 @@
                     Id = 1,
                     Content = "Great salad, easy to make!",
                     RecipeId = 1,
-                    UserId = "seed-user-2",
+                    UserId = "7699db63-964f-7682-82609-d76562e346ce",
                     CreatedOn = DateTime.UtcNow
                 },
                 new Comment
@@ -50,7 +50,7 @@
                     Id = 2,
                     Content = "Cake was super moist and delicious.",
                     RecipeId = 2,
-                    UserId = "seed-user-1",
+                    UserId = "7699db63-964f-7682-82609-d76562e346ce",
                     CreatedOn = DateTime.UtcNow
                 },
             };

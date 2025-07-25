@@ -37,14 +37,14 @@ namespace CallMeFood.Data.Configuration
                 {
                     Id = 1,
                     RecipeId = 1,
-                    UserId = "seed-user-2",
+                    UserId = "7699db63-964f-7682-82609-d76562e346ce",
                     CreatedOn = DateTime.UtcNow
                 },
                 new Favorite
                 {
                     Id = 2,
                     RecipeId = 2,
-                    UserId = "seed-user-1",
+                    UserId = "7699db63-964f-7682-82609-d76562e346ce",
                     CreatedOn = DateTime.UtcNow
                 }
             };

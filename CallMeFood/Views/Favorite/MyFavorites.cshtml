@@ -1,0 +1,19 @@
+﻿@using CallMeFood.ViewModels.RecipeViewModels;
+
+@model IEnumerable<RecipeListItemViewModel>
+
+<h2>My Favorite Recipes</h2>
+
+@if (!Model.Any())
+{
+    <p>You don't have any favorite recipes yet.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var recipe in Model)
+        {
+            <partial name="_RecipeCardPartial" model="recipe" />
+        }
+    </div>
+}

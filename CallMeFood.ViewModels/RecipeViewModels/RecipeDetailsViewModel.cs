@@ -16,10 +16,10 @@ namespace CallMeFood.ViewModels.RecipeViewModels
         public string? AuthorId { get; set; }
 
         public string NewCommentContent { get; set; } = null!;
+        public bool IsFavorite { get; set; }
 
         //navigation properties
         public List<string> Ingredients { get; set; } = new List<string>();
         public List<CommentViewModel> Comments { get; set; } = new List<CommentViewModel>();
-
     }
 }

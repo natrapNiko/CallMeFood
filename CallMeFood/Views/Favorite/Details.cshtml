@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Recipe Details";
+
+    var isLoggedIn = User.Identity != null && User.Identity.IsAuthenticated;
+    var isAuthor = Model.AuthorId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    var isAdmin = User.IsInRole("Admin");
+}
+@if (isLoggedIn)
+{
+    if (Model.IsFavorite)
+    {
+        <form asp-controller="Favorite" asp-action="Remove" method="post">
+            <input type="hidden" name="recipeId" value="@Model.Id" />
+            <button type="submit" class="btn btn-warning">Remove from Favorites</button>
+        </form>
+    }
+    else
+    {
+        <form asp-controller="Favorite" asp-action="Add" method="post">
+            <input type="hidden" name="recipeId" value="@Model.Id" />
+            <button type="submit" class="btn btn-outline-primary">Add to Favorites</button>
+        </form>
+    }
+}
