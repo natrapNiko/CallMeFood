@@ -13,7 +13,7 @@
         Task DeleteAsync(int id); //yes
 
         //Pagination and Filtering
-        Task<IEnumerable<RecipeViewModel>> GetPagedAsync(int pageNumber, int pageSize); //yes
+        Task<IEnumerable<RecipeListItemViewModel>> GetPagedAsync(int pageNumber, int pageSize, string? userId); //yes
         Task<int> GetTotalCountAsync(); //yes
 
         //Search

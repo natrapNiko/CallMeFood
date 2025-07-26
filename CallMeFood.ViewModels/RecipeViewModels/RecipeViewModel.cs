@@ -9,7 +9,8 @@
             public string AuthorName { get; set; } = null!;
             public string AuthorId { get; set; } = null!;
             public DateTime CreatedOn { get; set; }
-            public string? ImageUrl { get; set; } 
+            public string? ImageUrl { get; set; }
+            public bool IsFavorite { get; set; }
     }
 
     

@@ -107,7 +107,7 @@ namespace CallMeFood.Services
                     UserName = c.User.UserName
                 }).ToList(),
 
-                IsFavorite = isFavorite // ← this is the key!
+                IsFavorite = isFavorite //← this is the key!
             };
         }
             
@@ -121,26 +121,26 @@ namespace CallMeFood.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<RecipeViewModel>> GetPagedAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<RecipeListItemViewModel>> GetPagedAsync(int page, int pageSize, string? userId)
         {
-            return await _context.Recipes
-                .Where(r => !r.IsDeleted)
+            var recipes = await _context.Recipes
+                .Include(r => r.Category)
                 .OrderByDescending(r => r.CreatedOn)
-                .Skip((pageNumber - 1) * pageSize)
+                .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .Select(r => new RecipeViewModel
+                .Select(r => new RecipeListItemViewModel
                 {
                     Id = r.Id,
                     Title = r.Title,
-                    Description = r.Description,
+                    ImageUrl = r.ImageUrl ?? null!,
                     CategoryName = r.Category.Name,
-                    AuthorName = r.User.UserName ?? "Unknown",
-                    CreatedOn = r.CreatedOn,
-                    ImageUrl = r.ImageUrl,
-                    AuthorId = r.UserId
+                    IsFavorite = userId != null && r.Favorites.Any(f => f.UserId == userId)
                 })
                 .ToListAsync();
+
+            return recipes;
         }
+
 
         public async Task<int> GetTotalCountAsync()
         {
@@ -169,7 +169,7 @@ namespace CallMeFood.Services
             var recipe = await _context.Recipes.FindAsync(id);
             if (recipe != null)
             {
-                recipe.IsDeleted = true; // soft delete
+                recipe.IsDeleted = true; //soft delete
                 await _context.SaveChangesAsync();
             }
         }
@@ -183,5 +183,6 @@ namespace CallMeFood.Services
         {
             throw new NotImplementedException();
         }
+
     }
 }

@@ -29,16 +29,18 @@ namespace CallMeFood.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Route("Recipes")]
         public async Task<IActionResult> Index(int page = 1)
         {
             int pageSize = 6;
+            string? userId = _userManager.GetUserId(User);
 
             var totalRecipes = await _recipeService.GetTotalCountAsync();
-            var countRecipes = await _recipeService.GetPagedAsync(page, pageSize);
+            var pagedRecipes = await _recipeService.GetPagedAsync(page, pageSize, userId);
 
             var viewModel = new RecipeListViewModel
             {
-                Recipes = countRecipes,
+                Recipes = pagedRecipes, 
                 CurrentPage = page,
                 TotalPages = (int)Math.Ceiling((double)totalRecipes / pageSize),
                 PageSize = pageSize
@@ -46,6 +48,8 @@ namespace CallMeFood.Web.Controllers
 
             return View(viewModel);
         }
+
+
 
 
         //GET: Recipe/Details/5

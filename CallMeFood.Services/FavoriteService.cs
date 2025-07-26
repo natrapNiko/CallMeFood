@@ -1,10 +1,11 @@
 ﻿namespace CallMeFood.Services
 {
-    using CallMeFood.Data.Models;
     using CallMeFood.Data;
+    using CallMeFood.Data.Models;
     using CallMeFood.Services.Interfaces;
-    using Microsoft.EntityFrameworkCore;
     using CallMeFood.ViewModels.RecipeViewModels;
+
+    using Microsoft.EntityFrameworkCore;
 
     public class FavoriteService : IFavoriteService
     {
@@ -17,27 +18,29 @@
 
         public async Task AddAsync(int recipeId, string userId)
         {
-            var exists = await _context.Favorites
+            //Check if already exists
+            bool alreadyFavorited = await _context.Favorites
                 .AnyAsync(f => f.RecipeId == recipeId && f.UserId == userId);
 
-            if (!exists)
+            if (!alreadyFavorited)
             {
-                _context.Favorites.Add(new Favorite
+                var favorite = new Favorite
                 {
                     RecipeId = recipeId,
                     UserId = userId,
                     CreatedOn = DateTime.UtcNow
-                });
+                };
 
+                _context.Favorites.Add(favorite);
                 await _context.SaveChangesAsync();
             }
         }
+
 
         public async Task RemoveAsync(int recipeId, string userId)
         {
             var favorite = await _context.Favorites
                 .FirstOrDefaultAsync(f => f.RecipeId == recipeId && f.UserId == userId);
-
             if (favorite != null)
             {
                 _context.Favorites.Remove(favorite);
@@ -60,11 +63,9 @@
                     Id = f.Recipe.Id,
                     Title = f.Recipe.Title,
                     ImageUrl = f.Recipe.ImageUrl ?? null!,
-                    Description = f.Recipe.Description
+                    CategoryName = f.Recipe.Category.Name
                 })
                 .ToListAsync();
         }
     }
-
-
 }

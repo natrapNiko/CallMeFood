@@ -5,6 +5,6 @@
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
         public int PageSize { get; set; }
-        public IEnumerable<RecipeViewModel> Recipes { get; set; } = new List<RecipeViewModel>();
+        public IEnumerable<RecipeListItemViewModel> Recipes { get; set; } = new List<RecipeListItemViewModel>();
     }
 }

@@ -41,6 +41,25 @@
 
                             <div class="mt-auto d-flex justify-content-between align-items-center pt-2 border-top">
                                 <a href="@Url.Action("Details", "Recipe", new { id = recipe.Id })" class="btn btn-sm btn-outline-primary">View</a>
+                                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                                {
+                                    if (recipe.IsFavorite)
+                                    {
+                                        <form asp-controller="Favorite" asp-action="Remove" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="recipeId" value="@recipe.Id" />
+                                            <button type="submit" class="btn btn-sm btn-warning">★ Remove</button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-controller="Favorite" asp-action="Add" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="recipeId" value="@recipe.Id" />
+                                            <button type="submit" class="btn btn-sm btn-outline-primary">☆ Favorite</button>
+                                        </form>
+                                    }
+                                }
 
                                 @if (isAdmin || recipe.AuthorId == currentUserId)
                                 {

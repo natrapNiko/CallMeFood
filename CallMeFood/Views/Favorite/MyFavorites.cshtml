@@ -1,19 +1,48 @@
-﻿@using CallMeFood.ViewModels.RecipeViewModels;
-
+﻿@using CallMeFood.ViewModels.RecipeViewModels
 @model IEnumerable<RecipeListItemViewModel>
 
-<h2>My Favorite Recipes</h2>
+@{
+    ViewData["Title"] = "My Favorite Recipes";
+}
 
-@if (!Model.Any())
-{
-    <p>You don't have any favorite recipes yet.</p>
-}
-else
-{
-    <div class="row">
-        @foreach (var recipe in Model)
-        {
-            <partial name="_RecipeCardPartial" model="recipe" />
-        }
-    </div>
-}
+<div class="container mt-5">
+    <h2 class="text-center text-danger mb-4">❤️ My Favorite Recipes</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center shadow-sm">
+            You haven’t added any recipes to your favorites yet.
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var recipe in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card shadow-sm h-100 border-0">
+                        @if (!string.IsNullOrWhiteSpace(recipe.ImageUrl))
+                        {
+                            <img src="@recipe.ImageUrl" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Image for @recipe.Title" />
+                        }
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@recipe.Title</h5>
+                            <p class="card-text text-muted mb-1"><strong>Category:</strong> @recipe.CategoryName</p>
+                            <p class="text-muted mb-3" style="font-size: 0.9rem;"><i>Posted on @recipe.CreatedOn.ToString("yyyy-MM-dd")</i></p>
+
+                            <div class="mt-auto d-flex justify-content-between">
+                                <a asp-controller="Recipe" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-sm btn-outline-primary">👀 View</a>
+
+                                <form asp-controller="Favorite" asp-action="Remove" method="post" class="d-inline">
+                                    <input type="hidden" name="recipeId" value="@recipe.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Remove this recipe from your favorites?');">🗑 Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
