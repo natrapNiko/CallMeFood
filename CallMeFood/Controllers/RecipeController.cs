@@ -2,6 +2,7 @@
 namespace CallMeFood.Web.Controllers
 {
     using CallMeFood.Data.Models;
+    using CallMeFood.Services;
     using CallMeFood.Services.Interfaces;
     using CallMeFood.ViewModels;
     using CallMeFood.ViewModels.CategoryViewModels;
@@ -18,13 +19,15 @@ namespace CallMeFood.Web.Controllers
         private readonly IRecipeService _recipeService;
         private readonly ICategoryService _categoryService;
         private readonly ICommentService _commentService;
+        private readonly IIngredientService _ingredientService;
 
-        public RecipeController(IRecipeService recipeService, ICategoryService categoryService, UserManager<ApplicationUser> userManager, ICommentService commentService)
+        public RecipeController(IRecipeService recipeService, ICategoryService categoryService, UserManager<ApplicationUser> userManager, ICommentService commentService, IIngredientService ingredientService)
         {
             _recipeService = recipeService;
             _categoryService = categoryService;
             _userManager = userManager;
             _commentService = commentService;
+            _ingredientService = ingredientService;
         }
 
         [HttpGet]
@@ -62,6 +65,7 @@ namespace CallMeFood.Web.Controllers
             }
 
             var comments = await _commentService.GetByRecipeIdAsync(id);
+            var ingredients = await _ingredientService.GetByRecipeIdAsync(id); 
 
             var viewModel = new RecipeDetailsViewModel
             {
@@ -75,11 +79,14 @@ namespace CallMeFood.Web.Controllers
                 CreatedOn = recipe.CreatedOn,
                 AuthorId = recipe.AuthorId,
                 Comments = comments.ToList(),
-                NewCommentContent = string.Empty
+                Ingredients = ingredients.ToList(),
+                NewCommentContent = string.Empty,
+                IsFavorite = recipe.IsFavorite
             };
 
             return View(viewModel);
         }
+
 
         //GET: Recipe/Create
         [HttpGet]

@@ -1,7 +1,7 @@
-﻿using CallMeFood.ViewModels.CommentViewModels;
-
-namespace CallMeFood.ViewModels.RecipeViewModels
+﻿namespace CallMeFood.ViewModels.RecipeViewModels
 {
+    using CallMeFood.ViewModels.CommentViewModels;
+    using CallMeFood.ViewModels.IngredientViewModels;
     public class RecipeDetailsViewModel
     {
         public int Id { get; set; }
@@ -19,7 +19,7 @@ namespace CallMeFood.ViewModels.RecipeViewModels
         public bool IsFavorite { get; set; }
 
         //navigation properties
-        public List<string> Ingredients { get; set; } = new List<string>();
+        public List<IngredientViewModel>Ingredients { get; set; } = new List<IngredientViewModel>();
         public List<CommentViewModel> Comments { get; set; } = new List<CommentViewModel>();
     }
 }

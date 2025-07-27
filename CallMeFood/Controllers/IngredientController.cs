@@ -36,10 +36,12 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var ingredient = await _ingredientService.GetByIdAsync(id);
-            if (ingredient == null)
-                return NotFound();
+            var ingredient = await _ingredientService.GetForEditAsync(id);
 
+            if (ingredient == null)
+            {
+                return NotFound();
+            }
             return View(ingredient);
         }
 
@@ -49,9 +51,12 @@
         public async Task<IActionResult> Edit(IngredientEditViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
 
             await _ingredientService.UpdateAsync(model);
+
             return RedirectToAction("Details", "Recipe", new { id = model.RecipeId });
         }
 
@@ -59,9 +64,12 @@
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var ingredient = await _ingredientService.GetByIdAsync(id);
+            var ingredient = await _ingredientService.GetForEditAsync(id);
+
             if (ingredient == null)
+            {
                 return NotFound();
+            }
 
             return View(ingredient);
         }
@@ -69,10 +77,20 @@
         //POST: Ingredient/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id, int recipeId)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var ingredient = await _ingredientService.GetByIdAsync(id);
+            if (ingredient == null)
+            {
+                return NotFound();
+            }
+
+            int recipeId = ingredient.RecipeId;
+
             await _ingredientService.DeleteAsync(id);
-            return RedirectToAction("Details", "Recipe", new { id = recipeId });
+
+            return RedirectToAction("Details", "Recipe", new { id = recipeId }); 
         }
+
     }
 }

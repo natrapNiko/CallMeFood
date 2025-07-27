@@ -1,27 +1,14 @@
 ﻿@using CallMeFood.ViewModels.IngredientViewModels
 
-@model IngredientViewModel
-
-@{
-    ViewData["Title"] = "Delete Ingredient";
-}
+@model IngredientEditViewModel
 
 <h2>Delete Ingredient</h2>
 
-<div>
-    <h4>Are you sure you want to delete this ingredient?</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">Name</dt>
-        <dd class="col-sm-10">@Model.Name</dd>
+<p>Are you sure you want to delete the ingredient: <strong>@Model.Name</strong>?</p>
 
-        <dt class="col-sm-2">Quantity</dt>
-        <dd class="col-sm-10">@Model.Quantity</dd>
-    </dl>
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-controller="Recipe" asp-action="Details" asp-route-id="@Model.RecipeId" class="btn btn-secondary">Cancel</a>
+</form>
 
-    <form asp-action="DeleteConfirmed" method="post">
-        <input type="hidden" asp-for="Id" />
-        <button type="submit" class="btn btn-danger">Delete</button>
-        <a asp-controller="Recipe" asp-action="Details" asp-route-id="@Model.RecipeId" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>

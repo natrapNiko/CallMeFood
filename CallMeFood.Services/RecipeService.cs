@@ -8,6 +8,7 @@ namespace CallMeFood.Services
     using Microsoft.EntityFrameworkCore;
     using CallMeFood.ViewModels.CommentViewModels;
     using Microsoft.AspNetCore.Http;
+    using CallMeFood.ViewModels.IngredientViewModels;
 
     public class RecipeService : IRecipeService
     {
@@ -64,11 +65,12 @@ namespace CallMeFood.Services
         public async Task<RecipeDetailsViewModel?> GetByIdAsync(int id)
         {
             var recipe = await _context.Recipes
-        .Include(r => r.Category)
-        .Include(r => r.User)
-        .Include(r => r.Comments)
-            .ThenInclude(c => c.User)
-        .FirstOrDefaultAsync(r => r.Id == id);
+                .Include(r => r.Category)
+                .Include(r => r.User)
+                .Include(r => r.Ingredients)
+                .Include(r => r.Comments)
+                    .ThenInclude(c => c.User)
+                .FirstOrDefaultAsync(r => r.Id == id);
 
             if (recipe == null)
             {
@@ -98,7 +100,13 @@ namespace CallMeFood.Services
                 AuthorName = recipe.User.UserName ?? "Unknown",
                 AuthorId = recipe.UserId,
                 CreatedOn = recipe.CreatedOn,
-                Ingredients = recipe.Ingredients.Select(i => i.Name).ToList(),
+                Ingredients = recipe.Ingredients.Select(i => new IngredientViewModel
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Quantity = i.Quantity,
+                    RecipeId = i.RecipeId
+                }).ToList(),
                 Comments = recipe.Comments.Select(c => new CommentViewModel
                 {
                     Id = c.Id,
@@ -106,11 +114,13 @@ namespace CallMeFood.Services
                     CreatedOn = c.CreatedOn,
                     UserName = c.User.UserName
                 }).ToList(),
-
-                IsFavorite = isFavorite 
+                IsFavorite = isFavorite
             };
         }
-            
+
+
+
+
         public Task<IEnumerable<Recipe>> GetLatestAsync(int count)
         {
             throw new NotImplementedException();

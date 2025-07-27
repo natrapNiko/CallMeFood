@@ -1,24 +1,21 @@
 ﻿@using CallMeFood.ViewModels.IngredientViewModels
 @model IngredientEditViewModel
-@{
-    ViewData["Title"] = "Edit Ingredient";
-}
-
-<h2>@ViewData["Title"]</h2>
 
 <form asp-action="Edit" method="post">
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="RecipeId" />
+
     <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
+
     <div class="mb-3">
         <label asp-for="Quantity" class="form-label"></label>
         <input asp-for="Quantity" class="form-control" />
         <span asp-validation-for="Quantity" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-success">Save</button>
-    <a asp-controller="Recipe" asp-action="Details" asp-route-id="@Model.RecipeId" class="btn btn-secondary">Cancel</a>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
 </form>
