@@ -61,7 +61,7 @@
                                     }
                                 }
 
-                                @if (isAdmin || recipe.AuthorId == currentUserId)
+                                @if (User.Identity != null && User.Identity.IsAuthenticated && (isAdmin || recipe.AuthorId == currentUserId))
                                 {
                                     <div>
                                         <a href="@Url.Action("Edit", "Recipe", new { id = recipe.Id })" class="btn btn-sm btn-outline-secondary me-1">Edit</a>
@@ -84,7 +84,7 @@
         @for (int i = 1; i <= Model.TotalPages; i++)
         {
             <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
-                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                <a class="page-link" href="@Url.Action("Index", "Recipe", new { page = i })">@i</a>
             </li>
         }
     </ul>

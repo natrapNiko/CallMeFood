@@ -107,7 +107,7 @@ namespace CallMeFood.Services
                     UserName = c.User.UserName
                 }).ToList(),
 
-                IsFavorite = isFavorite //← this is the key!
+                IsFavorite = isFavorite 
             };
         }
             
@@ -125,6 +125,7 @@ namespace CallMeFood.Services
         {
             var recipes = await _context.Recipes
                 .Include(r => r.Category)
+                .Include(r => r.User)
                 .OrderByDescending(r => r.CreatedOn)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -132,15 +133,17 @@ namespace CallMeFood.Services
                 {
                     Id = r.Id,
                     Title = r.Title,
-                    ImageUrl = r.ImageUrl ?? null!,
+                    ImageUrl = r.ImageUrl ?? string.Empty,
                     CategoryName = r.Category.Name,
+                    AuthorName = r.User.UserName ?? "Unknown",
+                    AuthorId = r.UserId,
+                    CreatedOn = r.CreatedOn,
                     IsFavorite = userId != null && r.Favorites.Any(f => f.UserId == userId)
                 })
                 .ToListAsync();
 
             return recipes;
         }
-
 
         public async Task<int> GetTotalCountAsync()
         {
@@ -159,9 +162,23 @@ namespace CallMeFood.Services
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Recipe recipe)
+        public async Task UpdateAsync(RecipeEditViewModel model)
         {
-            throw new NotImplementedException();
+            var recipe = await _context.Recipes
+                .FirstOrDefaultAsync(r => r.Id == model.Id && !r.IsDeleted);
+
+            if (recipe == null)
+            {
+                throw new InvalidOperationException("Recipe not found or is deleted.");
+            }
+
+            recipe.Title = model.Title;
+            recipe.Description = model.Description;
+            recipe.Instructions = model.Instructions;
+            recipe.ImageUrl = model.ImageUrl;
+            recipe.CategoryId = model.CategoryId;
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
@@ -172,11 +189,6 @@ namespace CallMeFood.Services
                 recipe.IsDeleted = true; //soft delete
                 await _context.SaveChangesAsync();
             }
-        }
-
-        public Task UpdateAsync(RecipeEditViewModel model)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<IEnumerable<Recipe>> GetByUserIdAsync(string userId)

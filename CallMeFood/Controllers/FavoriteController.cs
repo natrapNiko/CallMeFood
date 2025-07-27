@@ -51,7 +51,7 @@ namespace CallMeFood.Web.Controllers
                 await _favoriteService.RemoveAsync(recipeId, userId);
             }
 
-            return RedirectToAction("Details", "Recipe", new { id = recipeId });
+            return RedirectToAction("Index", "Recipe", new { id = recipeId });
         }
     }
 }

@@ -4,6 +4,7 @@ using CallMeFood.Services;
 using CallMeFood.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using AdminSeeder = CallMeFood.Data.Configuration.AdminSeeder;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -34,13 +35,13 @@ builder.Services
 builder.Services.AddControllersWithViews();
 
 
-// Register services
-
+//Register services
 
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+builder.Services.AddScoped<IIngredientService, IngredientService>();
 
 
 builder.Services.AddRazorPages();
@@ -71,5 +72,13 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await AdminSeeder.SeedAsync(services);
+}
+
+
 
 app.Run();

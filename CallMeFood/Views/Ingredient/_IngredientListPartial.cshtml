@@ -1,0 +1,31 @@
+﻿@using CallMeFood.ViewModels.IngredientViewModels
+@model IEnumerable<IngredientViewModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Actions</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ingredient in Model)
+        {
+            <tr>
+                <td>@ingredient.Name</td>
+                <td>@ingredient.Quantity</td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-controller="Ingredient" asp-action="Edit" asp-route-id="@ingredient.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-controller="Ingredient" asp-action="Delete" asp-route-id="@ingredient.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
