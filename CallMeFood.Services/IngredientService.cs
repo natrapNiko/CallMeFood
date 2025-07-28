@@ -28,6 +28,7 @@
                 })
                 .ToListAsync();
         }
+
         public async Task AddAsync(IngredientCreateViewModel model)
         {
             var ingredient = new Ingredient
@@ -60,34 +61,6 @@
             };
         }
 
-
-        public async Task DeleteAsync(int id)
-        {
-            var ingredient = await _context.Ingredients.FindAsync(id);
-            if (ingredient != null)
-            {
-                _context.Ingredients.Remove(ingredient);
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        public async Task UpdateAsync(IngredientEditViewModel model)
-        {
-            var ingredient = await _context.Ingredients.FindAsync(model.Id);
-
-            if (ingredient == null)
-            {
-                throw new InvalidOperationException($"Ingredient with ID {model.Id} not found.");
-            }
-
-            ingredient.Name = model.Name;
-            ingredient.Quantity = model.Quantity;
-
-            _context.Ingredients.Update(ingredient);
-            await _context.SaveChangesAsync();
-        }
-
-
         public async Task<IngredientEditViewModel?> GetByIdAsync(int id)
         {
             var ingredient = await _context.Ingredients
@@ -107,5 +80,27 @@
             };
         }
 
+        public async Task UpdateAsync(IngredientEditViewModel model)
+        {
+            var ingredient = await _context.Ingredients.FindAsync(model.Id);
+
+            if (ingredient == null)
+                throw new InvalidOperationException($"Ingredient with ID {model.Id} not found.");
+
+            ingredient.Name = model.Name;
+            ingredient.Quantity = model.Quantity;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var ingredient = await _context.Ingredients.FindAsync(id);
+            if (ingredient != null)
+            {
+                _context.Ingredients.Remove(ingredient);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

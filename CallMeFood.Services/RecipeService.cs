@@ -10,23 +10,16 @@ namespace CallMeFood.Services
     using Microsoft.AspNetCore.Http;
     using CallMeFood.ViewModels.IngredientViewModels;
 
-    public class RecipeService : IRecipeService
+    public class RecipeService(ICommentService commentService, IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext) : IRecipeService
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ICommentService _commentService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public RecipeService(ApplicationDbContext context, ICommentService commentService, IHttpContextAccessor httpContextAccessor)
-        {
-            _context = context;
-            _commentService = commentService;
-            _httpContextAccessor = httpContextAccessor;
-        }
+        private readonly ICommentService _commentService = commentService;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+        private readonly ApplicationDbContext dbContext = dbContext;
 
         // get all recipes
         public async Task<IEnumerable<RecipeViewModel>> GetAllAsync()
         {
-            var recipes = await _context.Recipes
+            var recipes = await dbContext.Recipes
                 .Include(r => r.Category)
                 .Include(r => r.User)
                 .ToListAsync();
@@ -58,13 +51,13 @@ namespace CallMeFood.Services
                 IsDeleted = false
             };
 
-            await _context.Recipes.AddAsync(recipe);
-            await _context.SaveChangesAsync();
+            await dbContext.Recipes.AddAsync(recipe);
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<RecipeDetailsViewModel?> GetByIdAsync(int id)
         {
-            var recipe = await _context.Recipes
+            var recipe = await dbContext.Recipes
                 .Include(r => r.Category)
                 .Include(r => r.User)
                 .Include(r => r.Ingredients)
@@ -84,7 +77,7 @@ namespace CallMeFood.Services
 
             if (!string.IsNullOrEmpty(userId))
             {
-                isFavorite = await _context.Favorites
+                isFavorite = await dbContext.Favorites
                     .AnyAsync(f => f.UserId == userId && f.RecipeId == recipe.Id);
             }
 
@@ -133,7 +126,7 @@ namespace CallMeFood.Services
 
         public async Task<IEnumerable<RecipeListItemViewModel>> GetPagedAsync(int page, int pageSize, string? userId)
         {
-            var recipes = await _context.Recipes
+            var recipes = await dbContext.Recipes
                 .Include(r => r.Category)
                 .Include(r => r.User)
                 .OrderByDescending(r => r.CreatedOn)
@@ -157,7 +150,7 @@ namespace CallMeFood.Services
 
         public async Task<int> GetTotalCountAsync()
         {
-            return await _context.Recipes
+            return await dbContext.Recipes
                 .Where(r => !r.IsDeleted)
                 .CountAsync();
         }
@@ -174,7 +167,7 @@ namespace CallMeFood.Services
 
         public async Task UpdateAsync(RecipeEditViewModel model)
         {
-            var recipe = await _context.Recipes
+            var recipe = await dbContext.Recipes
                 .FirstOrDefaultAsync(r => r.Id == model.Id && !r.IsDeleted);
 
             if (recipe == null)
@@ -188,16 +181,16 @@ namespace CallMeFood.Services
             recipe.ImageUrl = model.ImageUrl;
             recipe.CategoryId = model.CategoryId;
 
-            await _context.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
-            var recipe = await _context.Recipes.FindAsync(id);
+            var recipe = await dbContext.Recipes.FindAsync(id);
             if (recipe != null)
             {
                 recipe.IsDeleted = true; //soft delete
-                await _context.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
             }
         }
 

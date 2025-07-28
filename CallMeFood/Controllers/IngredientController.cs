@@ -32,35 +32,47 @@
             return RedirectToAction("Details", "Recipe", new { id = model.RecipeId });
         }
 
-        //GET: Ingredient/Edit/5
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var ingredient = await _ingredientService.GetForEditAsync(id);
-
-            if (ingredient == null)
+            var model = await _ingredientService.GetForEditAsync(id);
+            if (model == null)
             {
                 return NotFound();
             }
-            return View(ingredient);
+
+            return View(model);
         }
 
-        //POST: Ingredient/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(IngredientEditViewModel model)
         {
+            Console.WriteLine($"Editing ingredient ID: {model.Id}"); // Debug output
+
             if (!ModelState.IsValid)
             {
+                Console.WriteLine("Model state invalid"); // Debug output
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
                 return View(model);
             }
 
-            await _ingredientService.UpdateAsync(model);
-
-            return RedirectToAction("Details", "Recipe", new { id = model.RecipeId });
+            try
+            {
+                await _ingredientService.UpdateAsync(model);
+                return RedirectToAction("Details", "Recipe", new { id = model.RecipeId });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in Edit POST: {ex.Message}");
+                ModelState.AddModelError("", "An error occurred while saving.");
+                return View(model);
+            }
         }
 
-        //GET: Ingredient/Delete/5
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

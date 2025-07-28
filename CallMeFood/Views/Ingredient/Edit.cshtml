@@ -1,7 +1,12 @@
 ﻿@using CallMeFood.ViewModels.IngredientViewModels
+
 @model IngredientEditViewModel
 
+<h2>Edit Ingredient</h2>
+
 <form asp-action="Edit" method="post">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="RecipeId" />
 
