@@ -8,16 +8,16 @@
 
     public class IngredientService : IIngredientService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext dbContext;
 
         public IngredientService(ApplicationDbContext context)
         {
-            _context = context;
+            dbContext = context;
         }
 
         public async Task<IEnumerable<IngredientViewModel>> GetByRecipeIdAsync(int recipeId)
         {
-            return await _context.Ingredients
+            return await dbContext.Ingredients
                 .Where(i => i.RecipeId == recipeId)
                 .Select(i => new IngredientViewModel
                 {
@@ -38,13 +38,13 @@
                 RecipeId = model.RecipeId
             };
 
-            _context.Ingredients.Add(ingredient);
-            await _context.SaveChangesAsync();
+            dbContext.Ingredients.Add(ingredient);
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<IngredientEditViewModel?> GetForEditAsync(int id)
         {
-            var ingredient = await _context.Ingredients
+            var ingredient = await dbContext.Ingredients
                 .Include(i => i.Recipe)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
@@ -63,7 +63,7 @@
 
         public async Task<IngredientEditViewModel?> GetByIdAsync(int id)
         {
-            var ingredient = await _context.Ingredients
+            var ingredient = await dbContext.Ingredients
                 .Include(i => i.Recipe)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
@@ -82,7 +82,7 @@
 
         public async Task UpdateAsync(IngredientEditViewModel model)
         {
-            var ingredient = await _context.Ingredients.FindAsync(model.Id);
+            var ingredient = await dbContext.Ingredients.FirstOrDefaultAsync(i => i.Id == model.Id);
 
             if (ingredient == null)
                 throw new InvalidOperationException($"Ingredient with ID {model.Id} not found.");
@@ -90,16 +90,17 @@
             ingredient.Name = model.Name;
             ingredient.Quantity = model.Quantity;
 
-            await _context.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
         }
+
 
         public async Task DeleteAsync(int id)
         {
-            var ingredient = await _context.Ingredients.FindAsync(id);
+            var ingredient = await dbContext.Ingredients.FindAsync(id);
             if (ingredient != null)
             {
-                _context.Ingredients.Remove(ingredient);
-                await _context.SaveChangesAsync();
+                dbContext.Ingredients.Remove(ingredient);
+                await dbContext.SaveChangesAsync();
             }
         }
     }

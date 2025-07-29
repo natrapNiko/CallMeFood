@@ -1,0 +1,32 @@
+﻿@using CallMeFood.ViewModels.RecipeViewModels
+@model IEnumerable<RecipeViewModel>
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h2 class="mb-4">Search Results</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">No recipes found matching your search.</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        @foreach (var recipe in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@recipe.Title</h5>
+                        <p class="card-text">@recipe.Description</p>
+                        <p class="card-text"><strong>Category:</strong> @recipe.CategoryName</p>
+                        <p class="card-text"><strong>Author:</strong> @recipe.AuthorName</p>
+                        <a asp-controller="Recipe" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

@@ -17,7 +17,7 @@
         Task<int> GetTotalCountAsync(); //yes
 
         //Search
-        Task<IEnumerable<Recipe>> SearchByTitleAsync(string title);
+        Task<IEnumerable<RecipeViewModel>> SearchByTitleAsync(string title);
         Task<IEnumerable<Recipe>> SearchByCategoryAsync(int categoryId);
 
         //For User-specific recipes

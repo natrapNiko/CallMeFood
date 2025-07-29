@@ -48,30 +48,15 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(IngredientEditViewModel model)
         {
-            Console.WriteLine($"Editing ingredient ID: {model.Id}"); // Debug output
-
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("Model state invalid"); // Debug output
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
                 return View(model);
             }
+            await _ingredientService.UpdateAsync(model);
 
-            try
-            {
-                await _ingredientService.UpdateAsync(model);
-                return RedirectToAction("Details", "Recipe", new { id = model.RecipeId });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in Edit POST: {ex.Message}");
-                ModelState.AddModelError("", "An error occurred while saving.");
-                return View(model);
-            }
+            return RedirectToAction("Details", "Recipe", new { id = model.RecipeId });
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)

@@ -10,6 +10,7 @@ namespace CallMeFood.Services.Interfaces
         Task UpdateAsync(IngredientEditViewModel model);
         Task<IngredientEditViewModel?> GetByIdAsync(int id);
         Task DeleteAsync(int id);
+
     }
 
 }

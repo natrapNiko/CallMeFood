@@ -2,25 +2,37 @@
 
 @model IngredientEditViewModel
 
-<h2>Edit Ingredient</h2>
+@{
+    ViewData["Title"] = "Edit Ingredient";
+}l
 
-<form asp-action="Edit" method="post">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<h2 class="text-center mb-4">Edit Ingredient</h2>
 
-    <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="RecipeId" />
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="RecipeId" />
 
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Quantity" class="form-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a asp-controller="Recipe" asp-action="Details" asp-route-id="@Model.RecipeId" class="btn btn-secondary">Cancel</a>
+        </form>
     </div>
+</div>
 
-    <div class="mb-3">
-        <label asp-for="Quantity" class="form-label"></label>
-        <input asp-for="Quantity" class="form-control" />
-        <span asp-validation-for="Quantity" class="text-danger"></span>
-    </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-</form>

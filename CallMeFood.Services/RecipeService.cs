@@ -160,10 +160,31 @@ namespace CallMeFood.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Recipe>> SearchByTitleAsync(string title)
+        public async Task<IEnumerable<RecipeViewModel>> SearchByTitleAsync(string title)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                return Enumerable.Empty<RecipeViewModel>();
+            }
+
+            var recipes = await dbContext.Recipes
+                .Where(r => !r.IsDeleted && r.Title.Contains(title))
+                .Include(r => r.Category)
+                .Include(r => r.User)
+                .ToListAsync();
+
+            return recipes.Select(r => new RecipeViewModel
+            {
+                Id = r.Id,
+                Title = r.Title,
+                Description = r.Description,
+                CategoryName = r.Category?.Name ?? "Unknown",
+                AuthorName = r.User?.UserName ?? "Unknown",
+                AuthorId = r.User?.Id ?? string.Empty,
+                CreatedOn = r.CreatedOn
+            });
         }
+        
 
         public async Task UpdateAsync(RecipeEditViewModel model)
         {
