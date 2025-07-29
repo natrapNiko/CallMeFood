@@ -215,10 +215,19 @@ namespace CallMeFood.Services
             }
         }
 
-        public Task<IEnumerable<Recipe>> GetByUserIdAsync(string userId)
+        public async Task<IEnumerable<RecipeListItemViewModel>> GetByUserIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            return await dbContext.Recipes
+                .Where(r => r.UserId == userId && !r.IsDeleted)
+                .Select(r => new RecipeListItemViewModel
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Description = r.Description,
+                    ImageUrl = r.ImageUrl,
+                    CreatedOn = r.CreatedOn
+                })
+                .ToListAsync();
         }
-
     }
 }

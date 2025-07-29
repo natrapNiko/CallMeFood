@@ -4,7 +4,7 @@ using CallMeFood.Services;
 using CallMeFood.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using AdminSeeder = CallMeFood.Data.Configuration.AdminSeeder;
+using AdminAccountConfiguration = CallMeFood.Data.Configuration.AdminAccountConfiguration;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -76,7 +76,7 @@ app.MapRazorPages();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    await AdminSeeder.SeedAsync(services);
+    await AdminAccountConfiguration.SeedAsync(services);
 }
 
 

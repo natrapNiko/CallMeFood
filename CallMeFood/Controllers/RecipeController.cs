@@ -109,25 +109,25 @@ namespace CallMeFood.Web.Controllers
         }
 
 
-        // POST: Recipe/Create
+        //POST: Recipe/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RecipeCreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                // Reload categories on error
+                //Reload categories on error
                 var categories = await _categoryService.GetAllAsync();
                 model.Categories = (IEnumerable<ViewModels.CategoryDropDownViewModel>?)categories.Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name }).ToList();
                 return View(model);
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Requires using System.Security.Claims
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 
             await _recipeService.AddAsync(model, userId!);
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Recipe/Edit/5
+        //GET: Recipe/Edit/5
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -147,7 +147,7 @@ namespace CallMeFood.Web.Controllers
                 Title = recipe.Title,
                 Description = recipe.Description,
                 Instructions = recipe.Instructions,
-                CategoryId = recipe.CategoryId, //Add this property to your ViewModel if missing
+                CategoryId = recipe.CategoryId, 
                 ImageUrl = recipe.ImageUrl,
                 Categories = categories
             };
@@ -169,6 +169,7 @@ namespace CallMeFood.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Recipe/Delete/5
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -196,10 +197,26 @@ namespace CallMeFood.Web.Controllers
 
             return RedirectToAction("Details", new { id });
         }
+
+        [HttpPost]
         public async Task<IActionResult> Search(string title)
         {
             var results = await _recipeService.SearchByTitleAsync(title);
             return View("SearchResults", results); 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyRecipes()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized();
+            }
+
+            var recipes = await _recipeService.GetByUserIdAsync(userId);
+            return View(recipes);
         }
 
     }

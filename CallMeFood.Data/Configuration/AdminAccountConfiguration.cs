@@ -4,7 +4,7 @@ namespace CallMeFood.Data.Configuration
     using CallMeFood.Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
-    public static class AdminSeeder
+    public static class AdminAccountConfiguration
     {
         public static async Task SeedAsync(IServiceProvider serviceProvider)
         {

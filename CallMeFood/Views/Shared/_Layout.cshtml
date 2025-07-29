@@ -30,6 +30,12 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Category" asp-action="Index">Categories</a>
                         </li>
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Recipe" asp-action="MyRecipes">My Recipes</a>
+                            </li>
+                        }
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
                             <li class="nav-item">
