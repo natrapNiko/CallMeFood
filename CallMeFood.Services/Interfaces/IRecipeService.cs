@@ -19,7 +19,7 @@
         //Search
         Task<IEnumerable<RecipeViewModel>> SearchByTitleAsync(string title); //yes
 
-        Task<IEnumerable<Recipe>> SearchByCategoryAsync(int categoryId);
+        Task<IEnumerable<Recipe>> SearchByCategoryAsync(int categoryId); //no
 
         Task<IEnumerable<RecipeListItemViewModel>> GetByUserIdAsync(string userId); //MyRecipe
     }

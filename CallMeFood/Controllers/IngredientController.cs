@@ -36,10 +36,11 @@
         public async Task<IActionResult> Edit(int id)
         {
             var model = await _ingredientService.GetForEditAsync(id);
-            if (model == null)
-            {
-                return NotFound();
-            }
+            
+                if (model == null) 
+                { 
+                    return NotFound();
+                }
 
             return View(model);
         }
@@ -48,14 +49,15 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(IngredientEditViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
+            if (!ModelState.IsValid) 
+            { 
+                return View(model); 
             }
-            await _ingredientService.UpdateAsync(model);
 
+            await _ingredientService.UpdateAsync(model);
             return RedirectToAction("Details", "Recipe", new { id = model.RecipeId });
         }
+
 
 
         [HttpGet]

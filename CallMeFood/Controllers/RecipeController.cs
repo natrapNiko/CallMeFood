@@ -2,7 +2,6 @@
 namespace CallMeFood.Web.Controllers
 {
     using CallMeFood.Data.Models;
-    using CallMeFood.Services;
     using CallMeFood.Services.Interfaces;
     using CallMeFood.ViewModels;
     using CallMeFood.ViewModels.CategoryViewModels;

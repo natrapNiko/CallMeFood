@@ -82,16 +82,20 @@
 
         public async Task UpdateAsync(IngredientEditViewModel model)
         {
-            var ingredient = await dbContext.Ingredients.FirstOrDefaultAsync(i => i.Id == model.Id);
+            var ingredient = await dbContext.Ingredients
+                .FirstOrDefaultAsync(i => i.Id == model.Id);
 
             if (ingredient == null)
+            { 
                 throw new InvalidOperationException($"Ingredient with ID {model.Id} not found.");
+            }
 
             ingredient.Name = model.Name;
             ingredient.Quantity = model.Quantity;
 
             await dbContext.SaveChangesAsync();
         }
+
 
 
         public async Task DeleteAsync(int id)

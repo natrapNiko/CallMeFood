@@ -13,6 +13,7 @@ namespace CallMeFood.ViewModels.IngredientViewModels
         [Required]
         public string Quantity { get; set; } = null!;
 
+
         public int RecipeId { get; set; }
 
         public string RecipeTitle { get; set; } = null!;
