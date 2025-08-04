@@ -15,14 +15,14 @@ namespace CallMeFood.Controllers
             _categoryService = categoryService;
         }
 
-        // GET: /Category
+        //GET: /Category
         public async Task<IActionResult> Index()
         {
             var categories = await _categoryService.GetAllAsync();
             return View(categories);
         }
 
-        // GET: /Category/Recipes/5
+        //GET: /Category/Recipes/5
         public async Task<IActionResult> Recipes(int id)
         {
             var recipes = await _categoryService.GetRecipesByCategoryIdAsync(id);
@@ -35,7 +35,7 @@ namespace CallMeFood.Controllers
             return View(recipes);
         }
 
-        // Details (GET)
+        //Details (GET)
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
@@ -57,7 +57,7 @@ namespace CallMeFood.Controllers
             return View(viewModel);
         }
 
-        // Create (GET)
+        //Create (GET)
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
@@ -69,9 +69,17 @@ namespace CallMeFood.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CategoryViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+                return View(model);
 
-            await _categoryService.CreateAsync(model);
+            bool created = await _categoryService.CreateAsync(model);
+
+            if (!created)
+            {
+                ModelState.AddModelError(string.Empty, "Category with this name already exists.");
+                return View(model);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

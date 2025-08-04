@@ -1,5 +1,4 @@
 ﻿@using CallMeFood.ViewModels.CategoryViewModels
-
 @model CategoryViewModel
 
 @{
@@ -10,6 +9,8 @@
     <h2 class="text-center text-primary">Create New Category</h2>
 
     <form asp-action="Create" method="post" class="mt-4">
+        <validation-summary class="text-danger" />
+
         <div class="mb-3">
             <label asp-for="Name" class="form-label"></label>
             <input asp-for="Name" class="form-control" />

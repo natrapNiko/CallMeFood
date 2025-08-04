@@ -8,7 +8,7 @@
         Task<IEnumerable<CategoryViewModel>> GetAllAsync();
         Task<IEnumerable<RecipeViewModel>> GetRecipesByCategoryIdAsync(int categoryId);
         Task<CategoryViewModel?> GetByIdAsync(int id);
-        Task CreateAsync(CategoryViewModel model);
+        Task<bool> CreateAsync(CategoryViewModel model);
         Task UpdateAsync(CategoryViewModel model);
         Task DeleteAsync(int id);
     }

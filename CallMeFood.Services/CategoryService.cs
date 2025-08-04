@@ -39,16 +39,27 @@ namespace CallMeFood.Services
             };
         }
 
-        public async Task CreateAsync(CategoryViewModel model)
+        public async Task<bool> CreateAsync(CategoryViewModel model)
         {
+            var normalizedName = model.Name.Trim().ToLower();
+
+            bool exists = await _context.Categories
+                .AnyAsync(c => c.Name.ToLower() == normalizedName);
+
+            if (exists)
+                return false;
+
             var category = new Category
             {
-                Name = model.Name
+                Name = model.Name.Trim()
             };
 
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
+
+            return true;
         }
+
 
         public async Task UpdateAsync(CategoryViewModel model)
         {
