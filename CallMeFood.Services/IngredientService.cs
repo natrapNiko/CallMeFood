@@ -44,10 +44,7 @@
 
         public async Task<IngredientEditViewModel?> GetForEditAsync(int id)
         {
-            var ingredient = await dbContext.Ingredients
-                .Include(i => i.Recipe)
-                .FirstOrDefaultAsync(i => i.Id == id);
-
+            var ingredient = await dbContext.Ingredients.FindAsync(id);
             if (ingredient == null)
                 return null;
 
@@ -56,8 +53,7 @@
                 Id = ingredient.Id,
                 Name = ingredient.Name,
                 Quantity = ingredient.Quantity,
-                RecipeId = ingredient.RecipeId,
-                RecipeTitle = ingredient.Recipe.Title
+                RecipeId = ingredient.RecipeId
             };
         }
 
@@ -75,24 +71,20 @@
                 Id = ingredient.Id,
                 Name = ingredient.Name,
                 Quantity = ingredient.Quantity,
-                RecipeId = ingredient.RecipeId,
-                RecipeTitle = ingredient.Recipe.Title
+                RecipeId = ingredient.RecipeId
             };
         }
 
         public async Task UpdateAsync(IngredientEditViewModel model)
         {
-            var ingredient = await dbContext.Ingredients
-                .FirstOrDefaultAsync(i => i.Id == model.Id);
-
+            var ingredient = await dbContext.Ingredients.FindAsync(model.Id);
             if (ingredient == null)
-            { 
-                throw new InvalidOperationException($"Ingredient with ID {model.Id} not found.");
-            }
+                throw new ArgumentException("Ingredient not found.");
 
             ingredient.Name = model.Name;
             ingredient.Quantity = model.Quantity;
 
+            dbContext.Ingredients.Update(ingredient);
             await dbContext.SaveChangesAsync();
         }
 
