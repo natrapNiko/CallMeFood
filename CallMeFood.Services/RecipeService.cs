@@ -159,7 +159,7 @@ namespace CallMeFood.Services
         {
             throw new NotImplementedException();
         }
-
+        
         public async Task<IEnumerable<RecipeViewModel>> SearchByTitleAsync(string title)
         {
             if (string.IsNullOrWhiteSpace(title))

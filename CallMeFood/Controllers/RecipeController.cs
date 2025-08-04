@@ -197,11 +197,11 @@ namespace CallMeFood.Web.Controllers
             return RedirectToAction("Details", new { id });
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Search(string title)
         {
             var results = await _recipeService.SearchByTitleAsync(title);
-            return View("SearchResults", results); 
+            return View("SearchResults", results);
         }
 
         [HttpGet]
