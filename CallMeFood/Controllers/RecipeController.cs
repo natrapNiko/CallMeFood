@@ -88,6 +88,7 @@ namespace CallMeFood.Web.Controllers
 
 
         //GET: Recipe/Create
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -109,6 +110,7 @@ namespace CallMeFood.Web.Controllers
 
 
         //POST: Recipe/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RecipeCreateViewModel model)
@@ -136,10 +138,10 @@ namespace CallMeFood.Web.Controllers
 
 
 
-            // Get categories
+            //Get categories
             var categories = await _categoryService.GetAllAsync();
 
-            // Map to ViewModel
+            //Map to ViewModel
             var viewModel = new RecipeEditViewModel
             {
                 Id = recipe.Id,
