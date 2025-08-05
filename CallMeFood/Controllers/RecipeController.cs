@@ -64,7 +64,9 @@ namespace CallMeFood.Web.Controllers
             }
 
             var comments = await _commentService.GetByRecipeIdAsync(id);
-            var ingredients = await _ingredientService.GetByRecipeIdAsync(id); 
+            var ingredients = await _ingredientService.GetByRecipeIdAsync(id);
+
+            var isAdmin = User.IsInRole("Admin");
 
             var viewModel = new RecipeDetailsViewModel
             {
@@ -80,7 +82,8 @@ namespace CallMeFood.Web.Controllers
                 Comments = comments.ToList(),
                 Ingredients = ingredients.ToList(),
                 NewCommentContent = string.Empty,
-                IsFavorite = recipe.IsFavorite
+                IsFavorite = recipe.IsFavorite,
+                IsAdmin = isAdmin
             };
 
             return View(viewModel);

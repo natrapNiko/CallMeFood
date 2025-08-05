@@ -100,12 +100,13 @@ namespace CallMeFood.Services
                     Quantity = i.Quantity,
                     RecipeId = i.RecipeId
                 }).ToList(),
+
                 Comments = recipe.Comments.Select(c => new CommentViewModel
                 {
                     Id = c.Id,
                     Content = c.Content,
                     CreatedOn = c.CreatedOn,
-                    UserName = c.User.UserName
+                    UserName = c.User.UserName ?? "Unknown"
                 }).ToList(),
                 IsFavorite = isFavorite
             };

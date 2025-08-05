@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<CallMeFood.Data.Models.ApplicationUser> userManager
+
+@{
+    var isLoggedIn = User.Identity?.IsAuthenticated ?? false;
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,7 +16,6 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
-
 </head>
 <body>
     <header>
@@ -39,13 +46,19 @@
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Favorite" asp-action="MyFavorites">My Favorites</a>
+                                <a class="nav-link" asp-controller="Favorite" asp-action="MyFavorites">❤️My Favorites</a>
                             </li>
                         }
                         <form asp-controller="Recipe" asp-action="Search" method="get" class="d-flex ms-auto" style="max-width: 300px;">
                             <input type="text" name="title" class="form-control me-2" placeholder="Search recipes..." />
                             <button type="submit" class="btn btn-outline-success">Search</button>
                         </form>
+                        @if(isLoggedIn || isAdmin)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Recipe" asp-action="Create">Add Recipe</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <partial name="_LoginPartial" />

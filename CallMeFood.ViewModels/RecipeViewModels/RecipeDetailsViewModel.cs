@@ -17,6 +17,7 @@
 
         public string NewCommentContent { get; set; } = null!;
         public bool IsFavorite { get; set; }
+        public bool IsAdmin { get; set; }
 
         //navigation properties
         public List<IngredientViewModel>Ingredients { get; set; } = new List<IngredientViewModel>();

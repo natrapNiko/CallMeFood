@@ -38,11 +38,6 @@ namespace CallMeFood.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int commentId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<CommentViewModel?> GetByIdAsync(int id)
         {
             return await _context.Comments
@@ -73,5 +68,16 @@ namespace CallMeFood.Services
                 })
                 .ToListAsync();
         }
+
+        public async Task DeleteAsync(int commentId)
+        {
+            var comment = await _context.Comments.FindAsync(commentId);
+            if (comment != null)
+            {
+                _context.Comments.Remove(comment);
+                await _context.SaveChangesAsync();
+            }
+        }
+
     }
 }
