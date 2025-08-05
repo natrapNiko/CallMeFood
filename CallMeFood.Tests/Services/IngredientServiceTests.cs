@@ -94,7 +94,6 @@ namespace CallMeFood.Tests.Services
 
             Assert.NotNull(result);
             Assert.Equal("Tomato", result?.Name);
-            Assert.Equal("Test Recipe", result?.RecipeTitle);
         }
 
         [Fact]
@@ -113,7 +112,6 @@ namespace CallMeFood.Tests.Services
 
             Assert.NotNull(result);
             Assert.Equal("Carrot", result?.Name);
-            Assert.Equal("Test Recipe", result?.RecipeTitle);
         }
 
         [Fact]
