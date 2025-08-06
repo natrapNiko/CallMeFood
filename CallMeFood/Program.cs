@@ -49,16 +49,18 @@ builder.Services.AddRazorPages();
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+    app.UseExceptionHandler("/Error/500");
+    app.UseHsts();
+
 }
 else
 {
-    app.UseExceptionHandler("/Error/500");
-    app.UseStatusCodePagesWithReExecute("/Error/{0}");
-    app.UseHsts();
+    app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
 }
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
