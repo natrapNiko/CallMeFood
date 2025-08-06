@@ -19,7 +19,10 @@
             }
 
             <p><strong>Description:</strong> @Model.Description</p>
-            <p><strong>Instructions:</strong> @Model.Instructions</p>
+
+            <p><strong>Instructions:</strong></p>
+            <div style="white-space: pre-wrap; font-family: inherit;">@Model.Instructions</div>
+
             <p><strong>Category:</strong> @Model.CategoryName</p>
             <p><strong>Author:</strong> @Model.AuthorName</p>
             <p class="text-muted"><i>Posted on @Model.CreatedOn.ToString("yyyy-MM-dd")</i></p>
@@ -61,7 +64,6 @@
                     </tbody>
                 </table>
             }
-
             else
             {
                 <p class="text-muted fst-italic">No ingredients added yet.</p>

@@ -38,6 +38,7 @@
                 RecipeId = model.RecipeId
             };
 
+
             dbContext.Ingredients.Add(ingredient);
             await dbContext.SaveChangesAsync();
         }
