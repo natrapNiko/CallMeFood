@@ -33,11 +33,5 @@ namespace CallMeFood.Web.Controllers
 
             return View(model);
         }
-
-        [Route("Home/Error")]
-        public IActionResult TriggerError()
-        {
-            throw new Exception("Test exception for error 500");
-        }
     }
 }
