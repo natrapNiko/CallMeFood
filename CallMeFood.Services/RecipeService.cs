@@ -29,7 +29,7 @@ namespace CallMeFood.Services
                 Id = r.Id,
                 Title = r.Title,
                 Description = r.Description,
-                CategoryName = r.Category?.Name ?? "Unknown",
+                CategoryName = r.Category != null ? r.Category.Name : "No Category",
                 AuthorName = r.User?.UserName ?? "Unknown",
                 AuthorId = r.User?.Id ?? string.Empty,
                 CreatedOn = r.CreatedOn,
@@ -220,13 +220,16 @@ namespace CallMeFood.Services
         {
             return await dbContext.Recipes
                 .Where(r => r.UserId == userId && !r.IsDeleted)
+                .Include(r=> r.Category)
                 .Select(r => new RecipeListItemViewModel
                 {
                     Id = r.Id,
                     Title = r.Title,
                     Description = r.Description,
                     ImageUrl = r.ImageUrl,
-                    CreatedOn = r.CreatedOn
+                    CreatedOn = r.CreatedOn,
+                    CategoryName = r.Category != null ? r.Category.Name : "No Category"
+                    
                 })
                 .ToListAsync();
         }
