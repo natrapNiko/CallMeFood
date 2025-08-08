@@ -36,7 +36,7 @@
             entity.HasOne(r => r.Category)
                 .WithMany(c => c.Recipes)
                 .HasForeignKey(r => r.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(r => r.User)
                 .WithMany(u => u.Recipes)

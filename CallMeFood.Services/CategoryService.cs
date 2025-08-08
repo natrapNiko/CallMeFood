@@ -72,12 +72,20 @@ namespace CallMeFood.Services
 
         public async Task DeleteAsync(int id)
         {
+            var hasRecipes = await _context.Recipes.AnyAsync(r => r.CategoryId == id && !r.IsDeleted);
+
+            if (hasRecipes)
+            {
+                throw new InvalidOperationException("Cannot delete category because it has related recipes.");
+            }
+
             var category = await _context.Categories.FindAsync(id);
             if (category == null) return;
 
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
         }
+
 
         public async Task<IEnumerable<RecipeViewModel>> GetRecipesByCategoryIdAsync(int categoryId)
         {

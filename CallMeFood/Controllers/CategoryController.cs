@@ -118,11 +118,21 @@ namespace CallMeFood.Controllers
         // Delete (POST)
         [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _categoryService.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _categoryService.DeleteAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction(nameof(Delete), new { id });
+            }
         }
+
 
     }
 }
