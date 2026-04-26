@@ -1,19 +1,19 @@
 # 🍔 CallMeFood
 
-**CallMeFood** is a full-stack recipe-sharing web application built as a defence project. It allows users to discover, create, and share recipes organised by category, with role-based access control for regular users and administrators.
+**CallMeFood** is an ASP.NET MVC recipe-sharing web application built on .NET 8.0. It allows users to discover, create, and share recipes organised by category, with role-based access control for regular users and administrators.
 
 ---
 
 ## 📸 Screenshots
 
 ### Home Page
-![CallMeFood Home Page](screenshots/screenshot1.png)
+![CallMeFood Home Page](screenshot1.png)
 
 ### Recipes by Category — Starters
-![Recipes in Starter category](screenshots/screenshot2.png)
+![Recipes in Starter category](screenshot2.png)
 
 ### Recipes by Category — Main Dishes
-![Recipes in Main Dishes category](screenshots/screenshot3.png)
+![Recipes in Main Dishes category](screenshot3.png)
 
 ---
 
@@ -33,15 +33,13 @@
 
 ## 🛠️ Tech Stack
 
-> Update this section to match your actual implementation.
-
 | Layer | Technology |
 |---|---|
+| Framework | ASP.NET MVC (.NET 8.0) |
+| Language | C# |
 | Frontend | HTML, CSS, JavaScript |
-| Backend | (e.g., Django / Flask / Node.js) |
-| Database | (e.g., PostgreSQL / SQLite / MongoDB) |
-| Auth | Session-based / JWT |
-| Deployment | (e.g., Heroku / Railway / VPS) |
+| Database | Entity Framework Core |
+| Auth | ASP.NET Identity |
 
 ---
 
@@ -49,9 +47,9 @@
 
 ### Prerequisites
 
-- Python 3.x / Node.js (depending on your stack)
-- pip / npm
-- A running database instance
+- .NET 8.0 SDK
+- SQL Server (or LocalDB)
+- Visual Studio 2022 / Rider / VS Code
 
 ### Installation
 
@@ -60,17 +58,17 @@
 git clone https://github.com/natrapNiko/CallMeFood.git
 cd CallMeFood
 
-# Install dependencies
-pip install -r requirements.txt   # or: npm install
+# Restore NuGet packages
+dotnet restore
 
 # Apply database migrations
-python manage.py migrate          # Django example
+dotnet ef database update
 
-# Run the development server
-python manage.py runserver        # or: npm start
+# Run the application
+dotnet run --project CallMeFood
 ```
 
-Open your browser at `http://localhost:8000`.
+Open your browser at `https://localhost:5001`.
 
 ---
 
@@ -78,12 +76,16 @@ Open your browser at `http://localhost:8000`.
 
 ```
 CallMeFood/
-├── screenshots/          # Screenshots for README
-├── static/               # CSS, JS, images
-├── templates/            # HTML templates
-├── recipes/              # Core recipe app / module
-├── users/                # Authentication & user management
-├── requirements.txt      # Python dependencies
+├── CallMeFood/              # Main MVC web project
+├── CallMeFood.Common/       # Shared constants & helpers
+├── CallMeFood.Data/         # DbContext & migrations
+├── CallMeFood.Data.Models/  # Entity models
+├── CallMeFood.Services/     # Business logic layer
+├── CallMeFood.ViewModels/   # View model DTOs
+├── CallMeFood.Tests/        # Unit tests
+├── screenshot1.png
+├── screenshot2.png
+├── screenshot3.png
 └── README.md
 ```
 
@@ -91,7 +93,7 @@ CallMeFood/
 
 ## 👤 Author
 
-**Nikolay Natrap**
+**Nikolay Natrap**  
 GitHub: [@natrapNiko](https://github.com/natrapNiko)
 
 ---
